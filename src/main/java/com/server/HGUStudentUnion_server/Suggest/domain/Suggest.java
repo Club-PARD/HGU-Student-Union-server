@@ -12,4 +12,6 @@ public class Suggest extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+
 }
