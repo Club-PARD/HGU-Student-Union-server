@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.HGUStudentUnion_server.AppUser.domain.AppUser;
 import com.server.HGUStudentUnion_server.common.BaseEntity;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,9 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@SQLDelete(sql = "UPDATE AppUser SET deleted = true WHERE id = ?")
+@Where(clause = "deleted = false")
 public class Suggest extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="SUGGEST_ID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,7 +37,6 @@ public class Suggest extends BaseEntity {
     private Boolean hide;
     private String title;
 
-    @Column(columnDefinition = "TEXT")
     private String content;
     private int status;
     private int viewCnt;
@@ -35,7 +45,6 @@ public class Suggest extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private AppUser ansUser;
 
-    @Column(columnDefinition = "TEXT")
     private String answer;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
