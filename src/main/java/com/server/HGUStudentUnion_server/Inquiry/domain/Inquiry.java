@@ -38,4 +38,7 @@ public class Inquiry extends BaseEntity {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime ansTime;
+
+    public void increaseViewCnt(){this.viewCnt++;}
+
 }
