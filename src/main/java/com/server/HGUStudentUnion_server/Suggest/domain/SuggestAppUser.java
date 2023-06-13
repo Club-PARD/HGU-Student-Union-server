@@ -1,6 +1,6 @@
-package com.server.HGUStudentUnion_server.Shop.domain;
+package com.server.HGUStudentUnion_server.Suggest.domain;
 
-import com.server.HGUStudentUnion_server.common.BaseEntity;
+import com.server.HGUStudentUnion_server.AppUser.domain.AppUser;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -15,14 +15,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @SQLDelete(sql = "UPDATE AppUser SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
-public class Shop extends BaseEntity {
+public class SuggestAppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Boolean hide;
-    private String name;
-    private String category;
-    private String content;
-    private String image;
+    @ManyToOne
+    @JoinColumn(name = "APPUSER_ID")
+    private AppUser appUser;
+
+    @ManyToOne
+    @JoinColumn(name = "SUGGEST_ID")
+    private Suggest suggest;
+
 }
