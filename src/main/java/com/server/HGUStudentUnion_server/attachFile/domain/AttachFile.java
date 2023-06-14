@@ -47,4 +47,12 @@ public class AttachFile extends BaseEntity {
     }
 
 
+    public static AttachFile shareFile(String title, String link, ShareNotice shareNotice) {
+        return AttachFile.builder()
+                .title(title)
+                .link(link)
+                .notice(null)
+                .shareNotice(shareNotice)
+                .build();
+    }
 }
