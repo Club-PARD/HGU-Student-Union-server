@@ -51,7 +51,6 @@ public class NoticeController {
             newFiles = attachFileService.saveMultiNoticeFile(request.getUrls(), request.getTitles(), res);
         }
         return ResponseEntity.ok(noticeService.update(noticeId, request, newFiles));
-//        return ResponseEntity.ok(res);
     }
     @DeleteMapping("/notices/{noticeId}")
     public ResponseEntity<Long> delete (@PathVariable Long noticeId){

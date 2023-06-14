@@ -3,6 +3,7 @@ package com.server.HGUStudentUnion_server.attachFile.application;
 import com.server.HGUStudentUnion_server.attachFile.domain.AttachFile;
 import com.server.HGUStudentUnion_server.attachFile.domain.repository.AttachFileRepo;
 import com.server.HGUStudentUnion_server.notice.domain.Notice;
+import com.server.HGUStudentUnion_server.shareNotice.domain.ShareNotice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,15 @@ public class AttachFileService {
         for (int i = 0; i < urls.size(); i++) {
                 ret.add( attachFileRepo.save(AttachFile.noticeFile(titles.get(i), urls.get(i), notice)));
         }
+        return ret;
+    }
 
+    @Transactional
+    public List<AttachFile> saveMultiShareFile(List<String> urls, List<String> titles, ShareNotice shareNotice) {
+        List<AttachFile> ret = new ArrayList<>();
+        for (int i = 0; i < urls.size(); i++) {
+            ret.add(attachFileRepo.save(AttachFile.shareFile(titles.get(i), urls.get(i), shareNotice)));
+        }
         return ret;
     }
 }
