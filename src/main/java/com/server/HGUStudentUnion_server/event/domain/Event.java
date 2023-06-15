@@ -2,6 +2,8 @@ package com.server.HGUStudentUnion_server.event.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.HGUStudentUnion_server.common.BaseEntity;
+import com.server.HGUStudentUnion_server.event.presentation.request.EventRequest;
+import com.server.HGUStudentUnion_server.event.presentation.request.EventUpdateRequest;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -33,4 +35,19 @@ public class Event extends BaseEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime end;
 
+    public static Event from(EventRequest request) {
+        return Event.builder()
+                .hide(false)
+                .title(request.getTitle())
+                .start(request.getStart())
+                .end(request.getEnd())
+                .build();
+    }
+
+    public void update(EventUpdateRequest request) {
+        this.hide = request.getHide();
+        this.title = request.getTitle();
+        this.start = request.getStart();
+        this.end = request.getEnd();
+    }
 }
