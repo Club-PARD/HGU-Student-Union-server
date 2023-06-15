@@ -1,11 +1,51 @@
 package com.server.HGUStudentUnion_server.shop.presentation;
 
+import com.server.HGUStudentUnion_server.event.domain.Event;
+import com.server.HGUStudentUnion_server.event.presentation.request.EventRequest;
+import com.server.HGUStudentUnion_server.event.presentation.request.EventUpdateRequest;
+import com.server.HGUStudentUnion_server.shop.application.ShopService;
+import com.server.HGUStudentUnion_server.shop.domain.Shop;
+import com.server.HGUStudentUnion_server.shop.presentation.request.ShopRequest;
+import com.server.HGUStudentUnion_server.shop.presentation.request.ShopUpdateRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class ShopController {
+
+    @Autowired
+    private ShopService shopService;
+
+
+
+    @GetMapping("/shops")
+    public ResponseEntity<List<Shop>> findAll(){
+        List<Shop> res = shopService.findAll();
+        return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("/shops")
+    public ResponseEntity<Shop> save(@RequestBody ShopRequest request){
+        Shop res = shopService.save(request);
+        return ResponseEntity.ok(res);
+    }
+
+    @PatchMapping("/shops/{shopId}")
+    public ResponseEntity<Shop> update(@PathVariable Long shopId, @RequestBody ShopUpdateRequest request){
+        Shop res = shopService.update(shopId, request);
+        return ResponseEntity.ok(res);
+    }
+
+    @DeleteMapping("/shops/{shopId}")
+    public ResponseEntity<Long> delete(@PathVariable Long shopId){
+        shopService.delete(shopId);
+        return ResponseEntity.ok(shopId);
+    }
+
 }
