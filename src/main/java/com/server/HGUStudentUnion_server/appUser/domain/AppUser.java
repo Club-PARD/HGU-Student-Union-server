@@ -1,6 +1,7 @@
 package com.server.HGUStudentUnion_server.appUser.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.server.HGUStudentUnion_server.appUser.presentation.request.AppUserRequest;
 import com.server.HGUStudentUnion_server.suggest.domain.SuggestAppUser;
 import com.server.HGUStudentUnion_server.common.BaseEntity;
 import lombok.*;
@@ -17,7 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE AppUser SET deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE AppUser SET deleted = true WHERE APPUSER_ID = ?")
 @Where(clause = "deleted = false")
 public class AppUser extends BaseEntity {
     @Id
@@ -36,4 +37,21 @@ public class AppUser extends BaseEntity {
     private List<SuggestAppUser> recommendList = new ArrayList<>();
 
 
+    public static AppUser from(AppUserRequest request) {
+        return AppUser.builder()
+                .auth(request.getAuth())
+                .name(request.getName())
+                .email(request.getEmail())
+                .build();
+    }
+
+    public void update(AppUserRequest request) {
+        this.auth = request.getAuth();
+        this.name = request.getName();
+        this.email = request.getEmail();
+    }
+
+    public void insertSuggestAppUser (SuggestAppUser suggestAppUser){
+        this.recommendList.add(suggestAppUser);
+    }
 }

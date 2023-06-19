@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE AppUser SET deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE SuggestAppUser SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
 public class SuggestAppUser {
     @Id
@@ -28,4 +28,10 @@ public class SuggestAppUser {
     @JoinColumn(name = "SUGGEST_ID")
     private Suggest suggest;
 
+    public static SuggestAppUser from(AppUser recommendUser, Suggest ret) {
+        return SuggestAppUser.builder()
+                .appUser(recommendUser)
+                .suggest(ret)
+                .build();
+    }
 }

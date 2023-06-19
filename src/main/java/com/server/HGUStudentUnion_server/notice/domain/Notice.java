@@ -27,6 +27,7 @@ public class Notice extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "APPUSER_ID")
     private AppUser user;
 
     @OneToMany(fetch = FetchType.LAZY)
