@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.HGUStudentUnion_server.appUser.domain.AppUser;
 import com.server.HGUStudentUnion_server.common.BaseEntity;
+import com.server.HGUStudentUnion_server.suggest.presentation.request.SuggestAnswerRequest;
+import com.server.HGUStudentUnion_server.suggest.presentation.request.SuggestRequest;
+import com.server.HGUStudentUnion_server.suggest.presentation.request.SuggestUpdateRequest;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -19,7 +22,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE AppUser SET deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE Suggest SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
 public class Suggest extends BaseEntity {
     @Id
@@ -28,6 +31,7 @@ public class Suggest extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(referencedColumnName = "APPUSER_ID", name="writerId", nullable = false)
     private AppUser appUser;
 
     @OneToMany(mappedBy = "suggest")
@@ -41,8 +45,8 @@ public class Suggest extends BaseEntity {
     private int status;
     private int viewCnt;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(referencedColumnName = "APPUSER_ID", name="ansUserId")
     private AppUser ansUser;
 
     private String answer;
@@ -50,9 +54,37 @@ public class Suggest extends BaseEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime ansTime;
 
+    public static Suggest from(AppUser writer, SuggestRequest request) {
+        return Suggest.builder()
+                .appUser(writer)
+                .hide(false)
+                .title(request.getTitle())
+                .content(request.getContent())
+                .status(0)
+                .viewCnt(0)
+                .ansUser(null)
+                .answer(null)
+                .ansTime(null)
+                .build();
+    }
+
 
     public void increaseViewCnt(){this.viewCnt++;}
 
 
+    public void update(SuggestUpdateRequest request) {
+        this.hide = request.getHide();
+        this.title = request.getTitle();
+        this.content = request.getContent();
+    }
 
+    public void insertAnswer(AppUser ansUser, SuggestAnswerRequest request) {
+        this.ansUser = ansUser;
+        this.answer = request.getAnswer();
+        this.ansTime = LocalDateTime.now();
+    }
+
+    public void insertSuggestAppUser (SuggestAppUser suggestAppUser){
+        this.recommendList.add(suggestAppUser);
+    }
 }
