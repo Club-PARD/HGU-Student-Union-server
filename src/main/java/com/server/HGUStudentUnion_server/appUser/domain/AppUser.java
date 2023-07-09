@@ -26,7 +26,7 @@ public class AppUser extends BaseEntity {
     @Column(name="APPUSER_ID")
     private Long id;
 
-    private int auth;
+    private int auth; // 1: 일반회원 2: 일반관리자 3: 총학관리자 4: 마스터관리자
     private String name;
     private String email;
 
@@ -53,5 +53,19 @@ public class AppUser extends BaseEntity {
 
     public void insertSuggestAppUser (SuggestAppUser suggestAppUser){
         this.recommendList.add(suggestAppUser);
+    }
+
+    public boolean isSuperManager() {
+        return (this.auth == 4);
+    }
+
+    public boolean isSUManager() {
+        return (this.auth >= 3);
+    }
+    public boolean isManager() {
+        return (this.auth >= 2);
+    }
+    public boolean isNormal() {
+        return (this.auth >= 1);
     }
 }
