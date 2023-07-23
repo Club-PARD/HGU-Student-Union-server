@@ -63,6 +63,7 @@ public class InquiryService {
     public Inquiry answer(Long id, AppUser ansUser, AnswerRequest request) {
         Inquiry ret = this.findById(id);
         ret.registerAnswer(request, ansUser);
+        ret.updateStatus(2);
         return ret;
     }
 }

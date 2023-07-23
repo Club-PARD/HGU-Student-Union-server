@@ -69,6 +69,12 @@ public class SuggestService {
         return ret;
     }
 
+    @Transactional
+    public SuggestAppUser recommend(AppUser recommendUser, RecommendRequest request) {
+        Suggest suggest = this.findById(request.getSuggestId());
+        return suggestAppUserRepo.save(SuggestAppUser.from(recommendUser, suggest));
+    }
+
 //    @Transactional
 //    public SuggestAppUser recommend(AppUser recommendUser, RecommendRequest request) {
 //        Suggest suggest = this.findById(request.getSuggestId());
