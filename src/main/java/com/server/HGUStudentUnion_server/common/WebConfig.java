@@ -2,24 +2,28 @@ package com.server.HGUStudentUnion_server.common;
 
 import com.server.HGUStudentUnion_server.auth.presentation.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
-
+public class WebConfig extends WebMvcConfigurationSupport {
 
     private final LoginInterceptor loginInterceptor;
     private final LoginNormalArgumentResolver loginNormalArgumentResolver;
     private final LoginManagerArgumentResolver loginManagerArgumentResolver;
     private final LoginSUManagerArgumentResolver loginSUManagerArgumentResolver;
     private final LoginSuperManagerArgumentResolver loginSuperManagerArgumentResolver;
+
+
+
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -33,6 +37,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor).addPathPatterns("/api/**");
+//        registry.addInterceptor( new LoginInterceptor()).addPathPatterns("/api/**");
+
     }
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {

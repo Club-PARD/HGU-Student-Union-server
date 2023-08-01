@@ -12,6 +12,9 @@ import com.server.HGUStudentUnion_server.auth.domain.required.RequiredSuperManag
 import com.server.HGUStudentUnion_server.auth.infrastructure.JwtProvider;
 import com.server.HGUStudentUnion_server.util.AuthorizationExtractor;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -23,8 +26,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoginInterceptor implements HandlerInterceptor {
     private final AuthService authService;
-
     private final JwtProvider jwtProvider;
+
+
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
