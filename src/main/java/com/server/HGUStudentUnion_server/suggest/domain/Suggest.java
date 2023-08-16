@@ -22,21 +22,17 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE Suggest SET deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE Suggest SET deleted = true WHERE SUGGEST_Id = ?")
 @Where(clause = "deleted = false")
 public class Suggest extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="SUGGEST_ID")
+//    @Column(name="SUGGEST_ID")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "APPUSER_ID", name="writerId", nullable = false)
     private AppUser appUser;
-
-    @OneToMany(mappedBy = "suggest")
-    @JsonIgnore
-    private List<SuggestAppUser> recommendList = new ArrayList<>();
 
     private Boolean hide;
     private String title;
@@ -45,7 +41,7 @@ public class Suggest extends BaseEntity {
     private int status;
     private int viewCnt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "APPUSER_ID", name="ansUserId")
     private AppUser ansUser;
 
@@ -84,7 +80,7 @@ public class Suggest extends BaseEntity {
         this.ansTime = LocalDateTime.now();
     }
 
-    public void insertSuggestAppUser (SuggestAppUser suggestAppUser){
-        this.recommendList.add(suggestAppUser);
-    }
+//    public void insertSuggestAppUser (SuggestAppUser suggestAppUser){
+//        this.recommendList.add(suggestAppUser);
+//    }
 }

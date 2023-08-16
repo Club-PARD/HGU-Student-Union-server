@@ -23,17 +23,21 @@ public class Shop extends BaseEntity {
     private Long id;
     private Boolean hide;
     private String name;
+    private String title;
     private String category;
     private String content;
     private String image;
+    private int viewCnt;
 
     public static Shop from(ShopRequest request){
         return Shop.builder()
                 .hide(false)
                 .name(request.getName())
                 .category(request.getCategory())
+                .title(request.getTitle())
                 .content(request.getContent())
                 .image(request.getImage())
+                .viewCnt(0)
                 .build();
     }
 
@@ -42,6 +46,11 @@ public class Shop extends BaseEntity {
         this.name = request.getName();
         this.category = request.getCategory();
         this.content = request.getContent();
+        this.title = request.getTitle();
         this.image = request.getImage();
+    }
+
+    public void viewCnt() {
+        this.viewCnt = this.viewCnt + 1;
     }
 }

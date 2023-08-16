@@ -1,9 +1,9 @@
-package com.server.HGUStudentUnion_server.event.domain;
+package com.server.HGUStudentUnion_server.banner.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.ser.Serializers;
+import com.server.HGUStudentUnion_server.banner.presentation.request.BannerRequest;
 import com.server.HGUStudentUnion_server.common.BaseEntity;
-import com.server.HGUStudentUnion_server.event.presentation.request.EventRequest;
-import com.server.HGUStudentUnion_server.event.presentation.request.EventUpdateRequest;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -15,48 +15,41 @@ import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@SQLDelete(sql = "UPDATE Event SET deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE Banner SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
-public class Event extends BaseEntity {
+public class Banner extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Boolean hide;
     private String title;
-    private String category;
-    private String content;
-
+    private Boolean hide;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime start;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime end;
-    private String link;
+    private String image;
 
-    public static Event from(EventRequest request) {
-        return Event.builder()
-                .hide(false)
-                .category(request.getCategory())
-                .content(request.getContent())
+    public static Banner from(BannerRequest request){
+        return Banner.builder()
                 .title(request.getTitle())
+                .hide(request.getHide())
                 .start(request.getStart())
                 .end(request.getEnd())
-                .link(request.getLink())
+                .image(request.getImage())
                 .build();
     }
 
-    public void update(EventUpdateRequest request) {
-        this.hide = request.getHide();
+    public void update(BannerRequest request) {
         this.title = request.getTitle();
+        this.hide = request.getHide();
         this.start = request.getStart();
         this.end = request.getEnd();
-        this.content = request.getContent();
-        this.category = request. getCategory();
-        this.link = request.getLink();
+        this.image = request.getImage();
     }
 }

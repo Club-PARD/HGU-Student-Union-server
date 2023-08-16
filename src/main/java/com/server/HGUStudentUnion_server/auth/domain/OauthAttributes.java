@@ -9,6 +9,7 @@ public enum OauthAttributes {
         public OauthUserInfo of(Map<String, Object> attributes) {
             return OauthUserInfo.builder()
                     .email((String) attributes.get("email"))
+                    .name((String) attributes.get("name"))
                     .build();
         }
     };

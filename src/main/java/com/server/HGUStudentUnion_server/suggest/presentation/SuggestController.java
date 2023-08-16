@@ -6,12 +6,17 @@ import com.server.HGUStudentUnion_server.suggest.application.SuggestService;
 import com.server.HGUStudentUnion_server.suggest.domain.Suggest;
 import com.server.HGUStudentUnion_server.suggest.domain.SuggestAppUser;
 import com.server.HGUStudentUnion_server.suggest.presentation.request.*;
+import com.server.HGUStudentUnion_server.suggest.presentation.response.SuggestDetailResponse;
+import com.server.HGUStudentUnion_server.suggest.presentation.response.SuggestResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,18 +29,18 @@ public class SuggestController {
     private AppUserService appUserService;
 
     @GetMapping("/suggests")
-    public ResponseEntity<List<Suggest>> findAll(){
+    public ResponseEntity<List<SuggestResponse>> findAll(){
         return ResponseEntity.ok(suggestService.findAll());
     }
     @GetMapping("/suggests/{id}")
-    public ResponseEntity<Suggest> find(@PathVariable Long id){
-        return ResponseEntity.ok(suggestService.find(id));
+    public ResponseEntity<SuggestDetailResponse> find(@PathVariable Long id, @PathParam("userId") Long userId){
+        return ResponseEntity.ok(suggestService.find(id, userId));
     }
 
     @PostMapping("/suggests")
     public ResponseEntity<Suggest> save(@RequestBody SuggestRequest request){
-        AppUser writer = appUserService.find(request.getUserId());
-        return ResponseEntity.ok(suggestService.save(writer, request));
+//        AppUser writer = appUserService.find(request.getUserId());
+        return ResponseEntity.ok(suggestService.save(request.getUserId(), request));
     }
 
     @PatchMapping("/suggests/{suggestId}")
@@ -62,7 +67,8 @@ public class SuggestController {
     @PostMapping("/suggests/recommend")
     public ResponseEntity<SuggestAppUser> recommend(@RequestBody RecommendRequest request){
         AppUser recommendUser = appUserService.find(request.getUserId());
-        return ResponseEntity.ok(suggestService.recommend(recommendUser, request));
+        SuggestAppUser suggestAppUser =  suggestService.recommend(recommendUser, request);
+        return ResponseEntity.ok(suggestAppUser);
     }
 
 

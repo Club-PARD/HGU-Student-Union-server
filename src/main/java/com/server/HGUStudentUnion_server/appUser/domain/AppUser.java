@@ -25,7 +25,6 @@ public class AppUser extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="APPUSER_ID")
     private Long id;
-
     private int auth; // 1: 일반회원 2: 일반관리자 3: 총학관리자 4: 마스터관리자
     private String name;
     private String email;

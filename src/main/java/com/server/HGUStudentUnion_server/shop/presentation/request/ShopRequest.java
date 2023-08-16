@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ShopRequest {
     private String name;
+    private String title;
     private String category;
     private String content;
     private String image;
