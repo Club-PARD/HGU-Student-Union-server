@@ -12,8 +12,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class EventRequest {
     private String title;
+    private String content;
+    private String category;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime start;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime end;
+    private String link;
 }

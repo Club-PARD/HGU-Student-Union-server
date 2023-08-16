@@ -3,6 +3,7 @@ package com.server.HGUStudentUnion_server.auth.application;
 import com.server.HGUStudentUnion_server.appUser.application.AppUserService;
 import com.server.HGUStudentUnion_server.appUser.domain.AppUser;
 import com.server.HGUStudentUnion_server.appUser.domain.repository.AppUserRepo;
+import com.server.HGUStudentUnion_server.appUser.presentation.request.AppUserRequest;
 import com.server.HGUStudentUnion_server.auth.application.dto.LoginRequestDto;
 import com.server.HGUStudentUnion_server.auth.application.dto.LoginResponseDto;
 import com.server.HGUStudentUnion_server.auth.domain.LoginManager;
@@ -41,17 +42,22 @@ public class AuthService {
     }
     @Transactional
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-        OauthUserInfo userInfo = getStudentInfo(loginRequestDto);
+        OauthUserInfo userInfo =  getStudentInfo(loginRequestDto);
         Optional<AppUser> appUser = appUserRepo.findByEmail(userInfo.getEmail());
         return appUser.map(value -> {
             if(value.isManager()){
-                return new LoginResponseDto(false,
+                return new LoginResponseDto(
                         jwtProvider.createToken(String.valueOf(value.getId()), Member.MANAGER));
             }else {
-                return new LoginResponseDto(false,
+                return new LoginResponseDto(
                         jwtProvider.createToken(String.valueOf(value.getId()), Member.NORMAL));
             }
-        }).orElseGet(()->new LoginResponseDto(true, null));
+        }).orElseGet(()-> {
+            AppUser val = appUserRepo.save(AppUser.from(new AppUserRequest(1, userInfo.getName(), userInfo.getEmail())));
+            return new LoginResponseDto(
+                    jwtProvider.createToken(String.valueOf(val.getId()), Member.NORMAL));
+
+        });
     }
 
     @Transactional(readOnly = true)

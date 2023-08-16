@@ -17,6 +17,7 @@ public class OauthHandler {
     public OauthUserInfo getUserInfoFromCode(String oauthProvider, String code, Member member) {
         OauthProvider oauth = getOauthProvider(oauthProvider);
         Map<String, Object> attributes = apiRequester.getUserInfo(code, oauth, member);
+
         return OauthAttributes.extract(oauthProvider, attributes);
     }
 

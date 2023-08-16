@@ -29,6 +29,10 @@ public class ShopController {
         List<Shop> res = shopService.findAll();
         return ResponseEntity.ok(res);
     }
+    @GetMapping("/shops/{shopId}")
+    public ResponseEntity<Shop> find(@PathVariable Long shopId){
+        return ResponseEntity.ok(shopService.findById(shopId));
+    }
 
     @PostMapping("/shops")
     public ResponseEntity<Shop> save(@RequestBody ShopRequest request){

@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TokenResponse {
-    private boolean needRegister;
     private String token;
 
     public static TokenResponse from(LoginResponseDto loginResponseDto) {
-        return new TokenResponse(loginResponseDto.isNeedRegister(), loginResponseDto.getToken());
+        return new TokenResponse(loginResponseDto.getToken());
     }}

@@ -18,8 +18,16 @@ public class ShopService {
     private ShopRepo shopRepo;
 
 
+    @Transactional
     public Shop find(Long shopId){
-        return shopRepo.findById(shopId).orElseThrow(ShopNotFoundException::new);
+        Shop ret = shopRepo.findById(shopId).orElseThrow(ShopNotFoundException::new);
+        return ret;
+    }
+    @Transactional
+    public Shop findById(Long shopId){
+        Shop ret = this.find(shopId);
+        ret.viewCnt();
+        return ret;
     }
     @Transactional(readOnly = true)
     public List<Shop> findAll() {

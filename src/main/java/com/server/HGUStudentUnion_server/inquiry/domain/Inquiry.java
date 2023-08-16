@@ -26,7 +26,7 @@ public class Inquiry extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "APPUSER_ID", name="writerId", nullable = false)
     private AppUser user;
 
@@ -37,7 +37,7 @@ public class Inquiry extends BaseEntity {
     private int status;
     private int viewCnt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "APPUSER_ID", name="ansUserId")
     private AppUser ansUser;
     private String answer;
