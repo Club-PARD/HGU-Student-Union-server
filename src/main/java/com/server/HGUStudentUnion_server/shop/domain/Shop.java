@@ -22,6 +22,7 @@ public class Shop extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Boolean hide;
+    private Boolean pin;
     private String name;
     private String title;
     private String category;
@@ -32,6 +33,7 @@ public class Shop extends BaseEntity {
     public static Shop from(ShopRequest request){
         return Shop.builder()
                 .hide(false)
+                .pin(request.getPin())
                 .name(request.getName())
                 .category(request.getCategory())
                 .title(request.getTitle())
@@ -43,6 +45,7 @@ public class Shop extends BaseEntity {
 
     public void update(ShopUpdateRequest request){
         this.hide = request.getHide();
+        this.pin = request.getPin();
         this.name = request.getName();
         this.category = request.getCategory();
         this.content = request.getContent();

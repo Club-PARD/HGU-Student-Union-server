@@ -1,7 +1,10 @@
 package com.server.HGUStudentUnion_server.appUser.application;
 
+import com.server.HGUStudentUnion_server.appUser.domain.Admin;
 import com.server.HGUStudentUnion_server.appUser.domain.AppUser;
+import com.server.HGUStudentUnion_server.appUser.domain.repository.AdminRepo;
 import com.server.HGUStudentUnion_server.appUser.domain.repository.AppUserRepo;
+import com.server.HGUStudentUnion_server.appUser.presentation.request.AdminRequest;
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AppUserRequest;
 import com.server.HGUStudentUnion_server.exception.AppUser.AppUserNotFoundException;
 import com.server.HGUStudentUnion_server.suggest.domain.Suggest;
@@ -16,6 +19,9 @@ import java.util.List;
 public class AppUserService {
     @Autowired
     private AppUserRepo appUserRepo;
+
+    @Autowired
+    private AdminRepo adminRepo;
 
 
     @Transactional
@@ -53,5 +59,20 @@ public class AppUserService {
         return ret;
     }
 
+    @Transactional
+    public Admin newAdmin() {
+        return adminRepo.save(Admin.builder().build());
+    }
 
+    @Transactional
+    public void deleteAdmin(Long id) {
+        adminRepo.deleteById(id);
+    }
+
+    @Transactional
+    public AppUser updateAdminProfile(Long appUserId, AdminRequest request) {
+        AppUser ret = this.findById(appUserId);
+        ret.updateAdmin(request);
+        return ret;
+    }
 }

@@ -1,7 +1,9 @@
 package com.server.HGUStudentUnion_server.appUser.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.server.HGUStudentUnion_server.appUser.presentation.request.AdminRequest;
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AppUserRequest;
+import com.server.HGUStudentUnion_server.appUser.presentation.request.AuthRequest;
 import com.server.HGUStudentUnion_server.suggest.domain.SuggestAppUser;
 import com.server.HGUStudentUnion_server.common.BaseEntity;
 import lombok.*;
@@ -29,11 +31,15 @@ public class AppUser extends BaseEntity {
     private String name;
     private String email;
 
+    @OneToOne
+    @JoinColumn(name = "admin_id")
+    private Admin admin;
 
 
-    @OneToMany(mappedBy = "appUser")
-    @JsonIgnore
-    private List<SuggestAppUser> recommendList = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "appUser")
+//    @JsonIgnore
+//    private List<SuggestAppUser> recommendList = new ArrayList<>();
 
 
     public static AppUser from(AppUserRequest request) {
@@ -41,6 +47,7 @@ public class AppUser extends BaseEntity {
                 .auth(request.getAuth())
                 .name(request.getName())
                 .email(request.getEmail())
+                .admin(null)
                 .build();
     }
 
@@ -49,9 +56,15 @@ public class AppUser extends BaseEntity {
         this.name = request.getName();
         this.email = request.getEmail();
     }
-
-    public void insertSuggestAppUser (SuggestAppUser suggestAppUser){
-        this.recommendList.add(suggestAppUser);
+    public void updateAdmin(AdminRequest request){
+        this.name = request.getName();
+        this.admin.update(request);
+    }
+    public void setAdmin(Admin admin){
+        this.admin = admin;
+    }
+    public void updateAuth(AuthRequest request) {
+        this.auth = request.getAuth();
     }
 
     public boolean isSuperManager() {
@@ -67,4 +80,6 @@ public class AppUser extends BaseEntity {
     public boolean isNormal() {
         return (this.auth >= 1);
     }
+
+
 }

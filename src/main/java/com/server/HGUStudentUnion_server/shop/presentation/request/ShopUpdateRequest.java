@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ShopUpdateRequest {
     private Boolean hide;
+    private Boolean pin;
     private String name;
     private String title;
     private String category;

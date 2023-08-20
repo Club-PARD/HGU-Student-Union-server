@@ -13,6 +13,7 @@ public class ShareNoticeUpdateRequest {
     private List<String> titles;
     private List<String> urls;
     private List<Long> delFiles;
+    private Boolean pin;
     private int category;
     private String title;
     private String content;

@@ -27,7 +27,6 @@ import java.util.List;
 public class Suggest extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name="SUGGEST_ID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)

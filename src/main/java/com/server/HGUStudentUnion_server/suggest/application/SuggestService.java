@@ -94,10 +94,10 @@ public class SuggestService {
     }
 
     @Transactional
-    public SuggestAppUser recommend(AppUser recommendUser, RecommendRequest request) {
+    public Long recommend(AppUser recommendUser, RecommendRequest request) {
         Suggest suggest = this.findById(request.getSuggestId());
         SuggestAppUser ret = suggestAppUserRepo.save(SuggestAppUser.from(recommendUser, suggest));
-        return ret;
+        return ret.getId();
     }
 
 //    @Transactional

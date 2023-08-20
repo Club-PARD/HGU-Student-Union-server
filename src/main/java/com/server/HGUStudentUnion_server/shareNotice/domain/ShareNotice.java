@@ -35,6 +35,7 @@ public class ShareNotice extends BaseEntity {
 
     private int category;
     private Boolean hide;
+    private Boolean pin;
     private String title;
     private String content;
     private int viewCnt;
@@ -44,6 +45,7 @@ public class ShareNotice extends BaseEntity {
     public static ShareNotice from (ShareNoticeRequest request, AppUser user){
         return ShareNotice.builder()
                 .user(user)
+                .pin(request.getPin())
                 .category(request.getCategory())
                 .files(null)
                 .hide(false)
@@ -59,6 +61,7 @@ public class ShareNotice extends BaseEntity {
     public void update(ShareNoticeUpdateRequest request, List<AttachFile> newFiles) {
         this.category = request.getCategory();
         this.hide = request.getHide();
+        this.pin = request.getPin();
         this.title = request.getTitle();
         this.content = request.getContent();
         for(int i =0; i< newFiles.size(); i++){

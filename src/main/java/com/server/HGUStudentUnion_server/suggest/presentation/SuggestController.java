@@ -65,10 +65,9 @@ public class SuggestController {
 
 
     @PostMapping("/suggests/recommend")
-    public ResponseEntity<SuggestAppUser> recommend(@RequestBody RecommendRequest request){
+    public ResponseEntity<Long> recommend(@RequestBody RecommendRequest request){
         AppUser recommendUser = appUserService.find(request.getUserId());
-        SuggestAppUser suggestAppUser =  suggestService.recommend(recommendUser, request);
-        return ResponseEntity.ok(suggestAppUser);
+        return ResponseEntity.ok(suggestService.recommend(recommendUser, request));
     }
 
 
