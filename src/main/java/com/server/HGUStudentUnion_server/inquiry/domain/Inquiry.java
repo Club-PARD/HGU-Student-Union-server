@@ -71,6 +71,7 @@ public class Inquiry extends BaseEntity {
         this.ansUser = ansUser;
         this.answer = request.getAnswer();
         this.ansTime = LocalDateTime.now();
+        this.status = 2;
     }
 
     public void updateStatus(int status) {
