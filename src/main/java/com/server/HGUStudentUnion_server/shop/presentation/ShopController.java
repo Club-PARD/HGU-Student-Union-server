@@ -1,5 +1,7 @@
 package com.server.HGUStudentUnion_server.shop.presentation;
 
+import com.server.HGUStudentUnion_server.auth.domain.logins.SUManagerLogin;
+import com.server.HGUStudentUnion_server.auth.domain.required.RequiredSUManagerLogin;
 import com.server.HGUStudentUnion_server.event.domain.Event;
 import com.server.HGUStudentUnion_server.event.presentation.request.EventRequest;
 import com.server.HGUStudentUnion_server.event.presentation.request.EventUpdateRequest;
@@ -22,8 +24,6 @@ public class ShopController {
     @Autowired
     private ShopService shopService;
 
-
-
     @GetMapping("/shops")
     public ResponseEntity<List<Shop>> findAll(){
         List<Shop> res = shopService.findAll();
@@ -35,18 +35,21 @@ public class ShopController {
     }
 
     @PostMapping("/shops")
+    @RequiredSUManagerLogin
     public ResponseEntity<Shop> save(@RequestBody ShopRequest request){
         Shop res = shopService.save(request);
         return ResponseEntity.ok(res);
     }
 
     @PatchMapping("/shops/{shopId}")
+    @RequiredSUManagerLogin
     public ResponseEntity<Shop> update(@PathVariable Long shopId, @RequestBody ShopUpdateRequest request){
         Shop res = shopService.update(shopId, request);
         return ResponseEntity.ok(res);
     }
 
     @DeleteMapping("/shops/{shopId}")
+    @RequiredSUManagerLogin
     public ResponseEntity<Long> delete(@PathVariable Long shopId){
         shopService.delete(shopId);
         return ResponseEntity.ok(shopId);

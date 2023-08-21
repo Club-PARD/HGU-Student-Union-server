@@ -45,7 +45,6 @@ public class Inquiry extends BaseEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime ansTime;
 
-    public void increaseViewCnt(){this.viewCnt= this.viewCnt+1;}
 
     public static Inquiry from (AppUser user, InquiryRequest request){
         return Inquiry.builder()
@@ -73,6 +72,7 @@ public class Inquiry extends BaseEntity {
         this.ansTime = LocalDateTime.now();
         this.status = 2;
     }
+    public void increaseViewCnt(){this.viewCnt++;}
 
     public void updateStatus(int status) {
         this.status = status;

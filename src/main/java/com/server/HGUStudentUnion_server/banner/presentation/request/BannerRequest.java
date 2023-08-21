@@ -20,5 +20,6 @@ public class BannerRequest {
     private LocalDateTime start;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime end;
-    private String image;
+    private String webImage;
+    private String mobileImage;
 }

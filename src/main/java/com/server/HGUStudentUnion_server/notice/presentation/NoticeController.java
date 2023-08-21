@@ -2,6 +2,9 @@ package com.server.HGUStudentUnion_server.notice.presentation;
 
 import com.server.HGUStudentUnion_server.attachFile.application.AttachFileService;
 import com.server.HGUStudentUnion_server.attachFile.domain.AttachFile;
+import com.server.HGUStudentUnion_server.auth.domain.LoginUser;
+import com.server.HGUStudentUnion_server.auth.domain.logins.ManagerLogin;
+import com.server.HGUStudentUnion_server.auth.domain.required.RequiredManagerLogin;
 import com.server.HGUStudentUnion_server.notice.application.NoticeService;
 import com.server.HGUStudentUnion_server.notice.domain.Notice;
 import com.server.HGUStudentUnion_server.notice.presentation.request.NoticeRequest;
@@ -36,11 +39,13 @@ public class NoticeController {
         return ResponseEntity.ok(res);
     }
     @PostMapping("/notices")
-    public ResponseEntity<Notice> save (@RequestBody NoticeRequest request){
-        Notice res = noticeService.save(request);
+    @RequiredManagerLogin
+    public ResponseEntity<Notice> save (@ManagerLogin LoginUser loginUser, @RequestBody NoticeRequest request){
+        Notice res = noticeService.save(loginUser, request);
         return ResponseEntity.ok(res);
     }
     @PatchMapping("/notices/{noticeId}")
+    @RequiredManagerLogin
     public ResponseEntity<Notice> update (@PathVariable Long noticeId, @RequestBody NoticeUpdateRequest request){
         Notice res = noticeService.findById(noticeId);
         if(request.getDelFiles().size()>0){
@@ -53,6 +58,7 @@ public class NoticeController {
         return ResponseEntity.ok(noticeService.update(noticeId, request, newFiles));
     }
     @DeleteMapping("/notices/{noticeId}")
+    @RequiredManagerLogin
     public ResponseEntity<Long> delete (@PathVariable Long noticeId){
         noticeService.delete(noticeId);
         return ResponseEntity.ok(noticeId);

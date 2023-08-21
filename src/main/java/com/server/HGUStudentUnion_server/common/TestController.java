@@ -1,40 +1,15 @@
 package com.server.HGUStudentUnion_server.common;
 
-import com.server.HGUStudentUnion_server.appUser.application.AppUserService;
-import com.server.HGUStudentUnion_server.appUser.domain.AppUser;
-import com.server.HGUStudentUnion_server.appUser.domain.repository.AppUserRepo;
-import com.server.HGUStudentUnion_server.attachFile.domain.AttachFile;
-import com.server.HGUStudentUnion_server.attachFile.domain.repository.AttachFileRepo;
-import com.server.HGUStudentUnion_server.auth.domain.LoginManager;
-import com.server.HGUStudentUnion_server.auth.domain.LoginNormal;
+import com.server.HGUStudentUnion_server.auth.domain.LoginUser;
 import com.server.HGUStudentUnion_server.auth.domain.logins.ManagerLogin;
 import com.server.HGUStudentUnion_server.auth.domain.logins.NormalLogin;
 import com.server.HGUStudentUnion_server.auth.domain.required.RequiredLogin;
 import com.server.HGUStudentUnion_server.auth.domain.required.RequiredManagerLogin;
 import com.server.HGUStudentUnion_server.auth.domain.required.RequiredSUManagerLogin;
 import com.server.HGUStudentUnion_server.auth.domain.required.RequiredSuperManagerLogin;
-import com.server.HGUStudentUnion_server.event.application.EventService;
-import com.server.HGUStudentUnion_server.event.domain.Event;
-import com.server.HGUStudentUnion_server.event.domain.repository.EventRepo;
-import com.server.HGUStudentUnion_server.event.presentation.request.EventRequest;
-import com.server.HGUStudentUnion_server.event.presentation.request.EventUpdateRequest;
-import com.server.HGUStudentUnion_server.inquiry.application.InquiryService;
-import com.server.HGUStudentUnion_server.notice.application.NoticeService;
-import com.server.HGUStudentUnion_server.shareNotice.application.ShareNoticeService;
-import com.server.HGUStudentUnion_server.shareNotice.domain.ShareNotice;
-import com.server.HGUStudentUnion_server.shop.application.ShopService;
-import com.server.HGUStudentUnion_server.shop.domain.Shop;
-import com.server.HGUStudentUnion_server.shop.domain.repository.ShopRepo;
-import com.server.HGUStudentUnion_server.shop.presentation.request.ShopRequest;
-import com.server.HGUStudentUnion_server.suggest.application.SuggestService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.xml.ws.Response;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,23 +29,23 @@ public class TestController {
 
     @GetMapping("/normal")
     @RequiredLogin
-    public ResponseEntity<String> normalTest(@NormalLogin LoginNormal loginNormal){
+    public ResponseEntity<String> normalTest(@NormalLogin LoginUser loginNormal){
         return ResponseEntity.ok("This is normal Method"+loginNormal.getId());
     }
     @GetMapping("/manager")
     @RequiredManagerLogin
-    public ResponseEntity<String> managerTest(@ManagerLogin LoginManager loginManager){
-        return ResponseEntity.ok("This is manager Method"+loginManager.getId());
+    public ResponseEntity<String> managerTest(@ManagerLogin LoginUser loginUser){
+        return ResponseEntity.ok("This is manager Method"+ loginUser.getId());
     }
     @GetMapping("/sumanager")
     @RequiredSUManagerLogin
-    public ResponseEntity<String> sumanagerTest(@ManagerLogin LoginManager loginManager){
-        return ResponseEntity.ok("This is sumanager Method"+loginManager.getId());
+    public ResponseEntity<String> sumanagerTest(@ManagerLogin LoginUser loginUser){
+        return ResponseEntity.ok("This is sumanager Method"+ loginUser.getId());
     }
     @GetMapping("/supermanager")
     @RequiredSuperManagerLogin
-    public ResponseEntity<String> supermanagerTest(@ManagerLogin LoginManager loginManager){
-        return ResponseEntity.ok("This is supermanager Method, id:"+loginManager.getId());
+    public ResponseEntity<String> supermanagerTest(@ManagerLogin LoginUser loginUser){
+        return ResponseEntity.ok("This is supermanager Method, id:"+ loginUser.getId());
     }
 
 //    private final AppUserRepo appUserRepo;

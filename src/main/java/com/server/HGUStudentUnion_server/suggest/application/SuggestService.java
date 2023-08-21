@@ -82,7 +82,7 @@ public class SuggestService {
     @Transactional
     public Suggest status(Long suggestId, SuggestStatusRequest request) {
         Suggest ret = this.findById(suggestId);
-        ret.setStatus(request.getStatus());
+        ret.updateStatus(request.getStatus());
         return ret;
     }
 
@@ -94,8 +94,8 @@ public class SuggestService {
     }
 
     @Transactional
-    public Long recommend(AppUser recommendUser, RecommendRequest request) {
-        Suggest suggest = this.findById(request.getSuggestId());
+    public Long recommend(AppUser recommendUser, Long suggestId) {
+        Suggest suggest = this.findById(suggestId);
         SuggestAppUser ret = suggestAppUserRepo.save(SuggestAppUser.from(recommendUser, suggest));
         return ret.getId();
     }

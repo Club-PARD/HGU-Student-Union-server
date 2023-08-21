@@ -2,6 +2,11 @@ package com.server.HGUStudentUnion_server.suggest.presentation;
 
 import com.server.HGUStudentUnion_server.appUser.application.AppUserService;
 import com.server.HGUStudentUnion_server.appUser.domain.AppUser;
+import com.server.HGUStudentUnion_server.auth.domain.LoginUser;
+import com.server.HGUStudentUnion_server.auth.domain.logins.NormalLogin;
+import com.server.HGUStudentUnion_server.auth.domain.logins.SUManagerLogin;
+import com.server.HGUStudentUnion_server.auth.domain.required.RequiredLogin;
+import com.server.HGUStudentUnion_server.auth.domain.required.RequiredSUManagerLogin;
 import com.server.HGUStudentUnion_server.suggest.application.SuggestService;
 import com.server.HGUStudentUnion_server.suggest.domain.Suggest;
 import com.server.HGUStudentUnion_server.suggest.domain.SuggestAppUser;
@@ -29,45 +34,49 @@ public class SuggestController {
     private AppUserService appUserService;
 
     @GetMapping("/suggests")
+    @RequiredLogin
     public ResponseEntity<List<SuggestResponse>> findAll(){
         return ResponseEntity.ok(suggestService.findAll());
     }
     @GetMapping("/suggests/{id}")
-    public ResponseEntity<SuggestDetailResponse> find(@PathVariable Long id, @PathParam("userId") Long userId){
-        return ResponseEntity.ok(suggestService.find(id, userId));
+    @RequiredLogin
+    public ResponseEntity<SuggestDetailResponse> find(@NormalLogin LoginUser loginUser, @PathVariable Long id){
+        return ResponseEntity.ok(suggestService.find(id, loginUser.getId()));
     }
 
     @PostMapping("/suggests")
-    public ResponseEntity<Suggest> save(@RequestBody SuggestRequest request){
-//        AppUser writer = appUserService.find(request.getUserId());
-        return ResponseEntity.ok(suggestService.save(request.getUserId(), request));
+    @RequiredLogin
+    public ResponseEntity<Suggest> save(@NormalLogin LoginUser loginUser ,@RequestBody SuggestRequest request){
+        return ResponseEntity.ok(suggestService.save(loginUser.getId(), request));
     }
 
     @PatchMapping("/suggests/{suggestId}")
+    @RequiredSUManagerLogin
     public ResponseEntity<Suggest> update(@PathVariable Long suggestId, @RequestBody SuggestUpdateRequest request){
         return ResponseEntity.ok(suggestService.update(suggestId, request));
     }
     @DeleteMapping("/suggests/{id}")
+    @RequiredSUManagerLogin
     public ResponseEntity<Long> delete(@PathVariable Long id){
         suggestService.delete(id);
         return ResponseEntity.ok(id);
     }
     @PatchMapping("/suggests/{suggestId}/status")
+    @RequiredSUManagerLogin
     public ResponseEntity<Suggest> status(@PathVariable Long suggestId, @RequestBody SuggestStatusRequest request){
         return ResponseEntity.ok(suggestService.status(suggestId, request));
     }
     @PatchMapping("/suggests/{suggestId}/answer")
-    public ResponseEntity<Suggest> status(@PathVariable Long suggestId, @RequestBody SuggestAnswerRequest request){
-        AppUser ansUser = appUserService.find((request.getAnsUserId()));
+    @RequiredSUManagerLogin
+    public ResponseEntity<Suggest> answer(@SUManagerLogin LoginUser loginUser, @PathVariable Long suggestId, @RequestBody SuggestAnswerRequest request){
+        AppUser ansUser = appUserService.find(loginUser.getId());
         return ResponseEntity.ok(suggestService.answer(suggestId, ansUser, request));
     }
-
-
-
-    @PostMapping("/suggests/recommend")
-    public ResponseEntity<Long> recommend(@RequestBody RecommendRequest request){
-        AppUser recommendUser = appUserService.find(request.getUserId());
-        return ResponseEntity.ok(suggestService.recommend(recommendUser, request));
+    @PostMapping("/suggests/{suggestId}/recommend")
+    @RequiredLogin
+    public ResponseEntity<Long> recommend(@NormalLogin LoginUser loginUser ,@PathVariable Long suggestId){
+        AppUser recommendUser = appUserService.find(loginUser.getId());
+        return ResponseEntity.ok(suggestService.recommend(recommendUser, suggestId));
     }
 
 

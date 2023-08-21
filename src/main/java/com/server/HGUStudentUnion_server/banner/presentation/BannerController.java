@@ -1,5 +1,6 @@
 package com.server.HGUStudentUnion_server.banner.presentation;
 
+import com.server.HGUStudentUnion_server.auth.domain.required.RequiredSuperManagerLogin;
 import com.server.HGUStudentUnion_server.banner.application.BannerService;
 import com.server.HGUStudentUnion_server.banner.domain.Banner;
 import com.server.HGUStudentUnion_server.banner.domain.PopUp;
@@ -29,16 +30,19 @@ public class BannerController {
         return ResponseEntity.ok(bannerService.findById(id));
     }
     @PostMapping("/banners")
+    @RequiredSuperManagerLogin
     public ResponseEntity<Banner> save(@RequestBody BannerRequest request){
         Banner res = bannerService.save(request);
         return ResponseEntity.ok(res);
     }
 
     @PatchMapping("/banners/{id}")
+    @RequiredSuperManagerLogin
     public ResponseEntity<Banner> update(@PathVariable Long id,@RequestBody BannerRequest request){
         return ResponseEntity.ok(bannerService.update(id, request));
     }
     @DeleteMapping("/banners/{id}")
+    @RequiredSuperManagerLogin
     public ResponseEntity<Long> delete(@PathVariable Long id){
         bannerService.delete(id);
         return ResponseEntity.ok(id);
