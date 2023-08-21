@@ -51,14 +51,13 @@ public class AppUser extends BaseEntity {
                 .build();
     }
 
-    public void update(AppUserRequest request) {
-        this.auth = request.getAuth();
+//    public void update(AppUserRequest request) {
+//        this.auth = request.getAuth();
+//        this.name = request.getName();
+//        this.email = request.getEmail();
+//    }
+    public void updateProfile(AdminRequest request){
         this.name = request.getName();
-        this.email = request.getEmail();
-    }
-    public void updateAdmin(AdminRequest request){
-        this.name = request.getName();
-        this.admin.update(request);
     }
     public void setAdmin(Admin admin){
         this.admin = admin;

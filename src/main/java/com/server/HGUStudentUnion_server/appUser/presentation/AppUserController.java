@@ -41,11 +41,12 @@ public class AppUserController {
         return ResponseEntity.ok(res);
     }
 
-    @PatchMapping("/appUsers/{appUserId}")
-    public ResponseEntity<AppUser> update(@PathVariable Long appUserId, @RequestBody AppUserRequest request){
-        AppUser res = appUserService.update(appUserId, request);
-        return ResponseEntity.ok(res);
-    }
+//    @PatchMapping("/appUsers/{appUserId}")
+//    public ResponseEntity<AppUser> update(@PathVariable Long appUserId, @RequestBody AppUserRequest request){
+//        AppUser res = appUserService.update(appUserId, request);
+//        return ResponseEntity.ok(res);
+//    }
+
     // API 명세 추가
     @PatchMapping("/appUsers/auth/{appUserId}")
     public ResponseEntity<AppUser> updateAuth(@PathVariable Long appUserId, @RequestBody AuthRequest request){

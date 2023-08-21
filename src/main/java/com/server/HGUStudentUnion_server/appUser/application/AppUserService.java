@@ -52,16 +52,16 @@ public class AppUserService {
         appUserRepo.delete(del);
     }
 
-    @Transactional
-    public AppUser update(Long appUserId, AppUserRequest request) {
-        AppUser ret = this.findById(appUserId);
-        ret.update(request);
-        return ret;
-    }
+//    @Transactional
+//    public AppUser update(Long appUserId, AppUserRequest request) {
+//        AppUser ret = this.findById(appUserId);
+//        ret.update(request);
+//        return ret;
+//    }
 
     @Transactional
     public Admin newAdmin() {
-        return adminRepo.save(Admin.builder().build());
+        return adminRepo.save(Admin.builder().position("미등록").department("미등록").build());
     }
 
     @Transactional
@@ -72,7 +72,9 @@ public class AppUserService {
     @Transactional
     public AppUser updateAdminProfile(Long appUserId, AdminRequest request) {
         AppUser ret = this.findById(appUserId);
-        ret.updateAdmin(request);
+        ret.updateProfile(request);
+        Admin ad = adminRepo.findById(ret.getAdmin().getId()).get();
+        ad.update(request);
         return ret;
     }
 }
