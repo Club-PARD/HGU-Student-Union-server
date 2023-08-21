@@ -25,16 +25,34 @@ public class SuggestResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
 
+    private String ansUser;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime ansTime;
+
 
     public static SuggestResponse of(Suggest suggest, int cnt){
+        if(suggest.getAnsUser() != null){
+            return new SuggestResponse(suggest.getId(),
+                    suggest.getAppUser().getName(),
+                    cnt,
+                    suggest.getHide(),
+                    suggest.getTitle(),
+                    suggest.getStatus(),
+                    suggest.getCreatedAt(),
+                    suggest.getAnsUser().getName(),
+                    suggest.getAnsTime());
+        } else {
+            return new SuggestResponse(suggest.getId(),
+                    suggest.getAppUser().getName(),
+                    cnt,
+                    suggest.getHide(),
+                    suggest.getTitle(),
+                    suggest.getStatus(),
+                    suggest.getCreatedAt(),
+                    null,
+                    null);
+        }
 
-        return new SuggestResponse(suggest.getId(),
-                suggest.getAppUser().getName(),
-                cnt,
-                suggest.getHide(),
-                suggest.getTitle(),
-                suggest.getStatus(),
-                suggest.getCreatedAt());
     }
 //
 //    public static SuggestResponse ofNo(Suggest suggest) {

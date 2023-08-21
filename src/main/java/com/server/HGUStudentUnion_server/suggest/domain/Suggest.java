@@ -22,7 +22,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE Suggest SET deleted = true WHERE SUGGEST_Id = ?")
+@SQLDelete(sql = "UPDATE Suggest SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
 public class Suggest extends BaseEntity {
     @Id
@@ -77,6 +77,7 @@ public class Suggest extends BaseEntity {
         this.ansUser = ansUser;
         this.answer = request.getAnswer();
         this.ansTime = LocalDateTime.now();
+        this.status = 2;
     }
 
 //    public void insertSuggestAppUser (SuggestAppUser suggestAppUser){
