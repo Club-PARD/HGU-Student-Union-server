@@ -33,7 +33,8 @@ public class Banner extends BaseEntity {
     private LocalDateTime start;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime end;
-    private String image;
+    private String webImage;
+    private String mobileImage;
 
     public static Banner from(BannerRequest request){
         return Banner.builder()
@@ -41,7 +42,8 @@ public class Banner extends BaseEntity {
                 .hide(request.getHide())
                 .start(request.getStart())
                 .end(request.getEnd())
-                .image(request.getImage())
+                .webImage(request.getWebImage())
+                .mobileImage(request.getMobileImage())
                 .build();
     }
 
@@ -50,6 +52,7 @@ public class Banner extends BaseEntity {
         this.hide = request.getHide();
         this.start = request.getStart();
         this.end = request.getEnd();
-        this.image = request.getImage();
+        this.webImage = request.getWebImage();
+        this.mobileImage = request.getMobileImage();
     }
 }

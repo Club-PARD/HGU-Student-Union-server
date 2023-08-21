@@ -5,6 +5,7 @@ import com.server.HGUStudentUnion_server.appUser.domain.repository.AppUserRepo;
 import com.server.HGUStudentUnion_server.attachFile.application.AttachFileService;
 import com.server.HGUStudentUnion_server.attachFile.domain.AttachFile;
 import com.server.HGUStudentUnion_server.attachFile.domain.repository.AttachFileRepo;
+import com.server.HGUStudentUnion_server.auth.domain.LoginUser;
 import com.server.HGUStudentUnion_server.notice.domain.Notice;
 import com.server.HGUStudentUnion_server.notice.domain.repository.NoticeRepo;
 import com.server.HGUStudentUnion_server.notice.presentation.request.NoticeRequest;
@@ -51,8 +52,8 @@ public class NoticeService {
     }
 
     @Transactional
-    public Notice save(NoticeRequest request) {
-        AppUser user = appUserRepo.findById(request.getUserId()).orElseThrow(AppUserNotFoundException::new);
+    public Notice save(LoginUser loginUser, NoticeRequest request) {
+        AppUser user = appUserRepo.findById(loginUser.getId()).orElseThrow(AppUserNotFoundException::new);
         Notice ret = noticeRepo.save(Notice.from(user, request));
         List<AttachFile> files = new ArrayList<>();
         if(request.getUrls().size()>0){

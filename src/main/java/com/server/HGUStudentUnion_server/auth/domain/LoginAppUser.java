@@ -1,12 +1,12 @@
-//package com.server.HGUStudentUnion_server.suggest.presentation.request;
+//package com.server.HGUStudentUnion_server.auth.domain;
 //
 //import lombok.AllArgsConstructor;
 //import lombok.Getter;
 //import lombok.NoArgsConstructor;
 //
-//@Getter
 //@NoArgsConstructor
 //@AllArgsConstructor
-//public class RecommendRequest {
-//    private Long suggestId;
+//@Getter
+//public class LoginAppUser {
+//    private Long id;
 //}

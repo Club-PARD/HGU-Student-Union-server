@@ -1,5 +1,6 @@
 package com.server.HGUStudentUnion_server.event.presentation;
 
+import com.server.HGUStudentUnion_server.auth.domain.required.RequiredManagerLogin;
 import com.server.HGUStudentUnion_server.event.application.EventService;
 import com.server.HGUStudentUnion_server.event.domain.Event;
 import com.server.HGUStudentUnion_server.event.presentation.request.EventRequest;
@@ -27,18 +28,21 @@ public class EventController {
     }
 
     @PostMapping("/events")
+    @RequiredManagerLogin
     public ResponseEntity<Event> save(@RequestBody EventRequest request){
         Event res = eventService.save(request);
         return ResponseEntity.ok(res);
     }
 
     @PatchMapping("/events/{eventId}")
+    @RequiredManagerLogin
     public ResponseEntity<Event> update(@PathVariable Long eventId, @RequestBody EventUpdateRequest request){
         Event res = eventService.update(eventId, request);
         return ResponseEntity.ok(res);
     }
 
     @DeleteMapping("/events/{eventId}")
+    @RequiredManagerLogin
     public ResponseEntity<Long> delete(@PathVariable Long eventId){
         eventService.delete(eventId);
         return ResponseEntity.ok(eventId);

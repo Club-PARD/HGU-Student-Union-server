@@ -6,21 +6,17 @@ import com.server.HGUStudentUnion_server.appUser.domain.repository.AppUserRepo;
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AppUserRequest;
 import com.server.HGUStudentUnion_server.auth.application.dto.LoginRequestDto;
 import com.server.HGUStudentUnion_server.auth.application.dto.LoginResponseDto;
-import com.server.HGUStudentUnion_server.auth.domain.LoginManager;
-import com.server.HGUStudentUnion_server.auth.domain.LoginNormal;
+import com.server.HGUStudentUnion_server.auth.domain.LoginUser;
 import com.server.HGUStudentUnion_server.auth.domain.Member;
 import com.server.HGUStudentUnion_server.auth.domain.OauthUserInfo;
 import com.server.HGUStudentUnion_server.auth.infrastructure.JwtProvider;
 import com.server.HGUStudentUnion_server.auth.infrastructure.OauthHandler;
-import com.server.HGUStudentUnion_server.exception.UnsupportedOauthProviderException;
 import com.server.HGUStudentUnion_server.exception.oauth.InvalidTokenException;
 import com.server.HGUStudentUnion_server.exception.oauth.ManagerNoAuthorizationException;
 import com.server.HGUStudentUnion_server.exception.oauth.NoAuthorizationException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.SignatureException;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -147,34 +143,34 @@ public class AuthService {
 
 
     @Transactional(readOnly = true)
-    public LoginNormal getLoginNormal(String accessToken) {
+    public LoginUser getLoginNormal(String accessToken) {
         AppUser appUser = findNormalByToken(accessToken);
         if(!appUser.isNormal())
             throw new NoAuthorizationException();
-        return new LoginNormal(appUser.getId());
+        return new LoginUser(appUser.getId());
     }
 
     @Transactional(readOnly = true)
-    public LoginManager getLoginManager(String accessToken) {
+    public LoginUser getLoginManager(String accessToken) {
         AppUser appUser = findManagerByToken(accessToken);
         if(!appUser.isManager())
             throw new ManagerNoAuthorizationException();
-        return new LoginManager(appUser.getId());
+        return new LoginUser(appUser.getId());
     }
 
     @Transactional(readOnly = true)
-    public LoginManager getLoginSUManager(String accessToken) {
+    public LoginUser getLoginSUManager(String accessToken) {
         AppUser appUser = findSUManagerByToken(accessToken);
         if(!appUser.isSUManager())
             throw new ManagerNoAuthorizationException();
-        return new LoginManager(appUser.getId());
+        return new LoginUser(appUser.getId());
     }
 
     @Transactional(readOnly = true)
-    public LoginManager getLoginSuperManager(String accessToken) {
+    public LoginUser getLoginSuperManager(String accessToken) {
         AppUser appUser = findSuperManagerByToken(accessToken);
         if(!appUser.isSuperManager())
             throw new ManagerNoAuthorizationException();
-        return new LoginManager(appUser.getId());
+        return new LoginUser(appUser.getId());
     }
 }

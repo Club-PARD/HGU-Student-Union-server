@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InquiryRequest {
-    private Long userId;
     private Boolean access;
     private String title;
     private String content;

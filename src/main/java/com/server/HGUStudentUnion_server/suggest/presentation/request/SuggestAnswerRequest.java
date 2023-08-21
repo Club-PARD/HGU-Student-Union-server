@@ -8,6 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SuggestAnswerRequest {
-    private Long ansUserId;
     private String answer;
 }

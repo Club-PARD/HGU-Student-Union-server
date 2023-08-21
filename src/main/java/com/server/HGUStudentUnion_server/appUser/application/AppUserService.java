@@ -8,7 +8,6 @@ import com.server.HGUStudentUnion_server.appUser.presentation.request.AdminReque
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AppUserRequest;
 import com.server.HGUStudentUnion_server.exception.AppUser.AppUserNotFoundException;
 import com.server.HGUStudentUnion_server.suggest.domain.Suggest;
-import com.server.HGUStudentUnion_server.suggest.presentation.request.RecommendRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

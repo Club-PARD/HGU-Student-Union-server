@@ -1,7 +1,6 @@
 package com.server.HGUStudentUnion_server.suggest.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.HGUStudentUnion_server.appUser.domain.AppUser;
 import com.server.HGUStudentUnion_server.common.BaseEntity;
 import com.server.HGUStudentUnion_server.suggest.presentation.request.SuggestAnswerRequest;
@@ -13,8 +12,6 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Builder
@@ -79,8 +76,8 @@ public class Suggest extends BaseEntity {
         this.ansTime = LocalDateTime.now();
         this.status = 2;
     }
+    public void updateStatus(int status){
+        this.status = status;
+    }
 
-//    public void insertSuggestAppUser (SuggestAppUser suggestAppUser){
-//        this.recommendList.add(suggestAppUser);
-//    }
 }

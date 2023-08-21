@@ -10,7 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NoticeRequest {
-    private Long userId;
     private List<String> titles;
     private List<String> urls;
     private String title;

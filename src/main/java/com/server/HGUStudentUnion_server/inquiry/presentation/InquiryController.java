@@ -2,6 +2,13 @@ package com.server.HGUStudentUnion_server.inquiry.presentation;
 
 import com.server.HGUStudentUnion_server.appUser.application.AppUserService;
 import com.server.HGUStudentUnion_server.appUser.domain.AppUser;
+import com.server.HGUStudentUnion_server.auth.domain.LoginUser;
+import com.server.HGUStudentUnion_server.auth.domain.logins.ManagerLogin;
+import com.server.HGUStudentUnion_server.auth.domain.logins.NormalLogin;
+import com.server.HGUStudentUnion_server.auth.domain.logins.SUManagerLogin;
+import com.server.HGUStudentUnion_server.auth.domain.required.RequiredLogin;
+import com.server.HGUStudentUnion_server.auth.domain.required.RequiredManagerLogin;
+import com.server.HGUStudentUnion_server.auth.domain.required.RequiredSUManagerLogin;
 import com.server.HGUStudentUnion_server.inquiry.application.InquiryService;
 import com.server.HGUStudentUnion_server.inquiry.domain.Inquiry;
 import com.server.HGUStudentUnion_server.inquiry.presentation.request.AnswerRequest;
@@ -26,38 +33,46 @@ public class InquiryController {
     private AppUserService appUserService;
 
     @GetMapping("/inquiries")
+    @RequiredLogin
     public ResponseEntity<List<Inquiry>> findAll(){
         return ResponseEntity.ok(inquiryService.findAll());
     }
     @GetMapping("/inquiries/{id}")
+    @RequiredLogin
     public ResponseEntity<Inquiry> findById(@PathVariable Long id){
-        return ResponseEntity.ok(inquiryService.find(id));
+        Inquiry res = inquiryService.find(id);
+        return ResponseEntity.ok(res);
     }
     @PostMapping("/inquiries")
-    public ResponseEntity<Inquiry> save(@RequestBody InquiryRequest request){
-        AppUser writer = appUserService.find(request.getUserId());
+    @RequiredLogin
+    public ResponseEntity<Inquiry> save(@NormalLogin LoginUser loginUser ,@RequestBody InquiryRequest request){
+        AppUser writer = appUserService.find(loginUser.getId());
         Inquiry res = inquiryService.save(writer, request);
         return ResponseEntity.ok(res);
     }
     @PatchMapping("/inquiries/{id}")
+    @RequiredSUManagerLogin
     public ResponseEntity<Inquiry> update(@PathVariable Long id, @RequestBody InquiryUpdateRequest request){
         return ResponseEntity.ok(inquiryService.update(id, request));
     }
 
     @DeleteMapping("/inquiries/{id}")
+    @RequiredSUManagerLogin
     public ResponseEntity<Long> delete(@PathVariable Long id){
         inquiryService.delete(id);
         return ResponseEntity.ok(id);
     }
 
     @PatchMapping("/inquiries/{id}/status")
+    @RequiredSUManagerLogin
     public ResponseEntity<Inquiry> updateStatus(@PathVariable Long id, @RequestBody InquiryStatus request){
         return ResponseEntity.ok(inquiryService.updateStatus(id, request.getStatus()));
     }
 
     @PatchMapping("/inquiries/{id}/answer")
-    public ResponseEntity<Inquiry> answer(@PathVariable Long id, @RequestBody AnswerRequest request){
-        AppUser ansUser = appUserService.find(request.getUserId());
+    @RequiredSUManagerLogin
+    public ResponseEntity<Inquiry> answer(@SUManagerLogin LoginUser loginUser, @PathVariable Long id, @RequestBody AnswerRequest request){
+        AppUser ansUser = appUserService.find(loginUser.getId());
         return ResponseEntity.ok(inquiryService.answer(id, ansUser, request));
     }
 
