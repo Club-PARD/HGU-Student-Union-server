@@ -6,6 +6,7 @@ import com.server.HGUStudentUnion_server.appUser.domain.repository.AdminRepo;
 import com.server.HGUStudentUnion_server.appUser.domain.repository.AppUserRepo;
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AdminRequest;
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AppUserRequest;
+import com.server.HGUStudentUnion_server.appUser.presentation.request.AuthRequest;
 import com.server.HGUStudentUnion_server.exception.AppUser.AppUserNotFoundException;
 import com.server.HGUStudentUnion_server.suggest.domain.Suggest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,26 @@ public class AppUserService {
         ret.updateProfile(request);
         Admin ad = adminRepo.findById(ret.getAdmin().getId()).get();
         ad.update(request);
+        return ret;
+    }
+
+    @Transactional
+    public AppUser updateAuth(Long appUserId, AuthRequest request) {
+        AppUser ret = appUserRepo.findById(appUserId).orElseThrow(AppUserNotFoundException::new);
+        if(ret.getAuth() == 1 && request.getAuth() > 1){
+            // 일반유저 -> Admin
+            Admin admin = this.newAdmin();
+            ret.setAdmin(admin);
+            ret.updateAuth(request);
+        }
+        else if(ret.getAuth() > 1 && request.getAuth() == 1){
+            // Admin -> 일반 유저
+            this.deleteAdmin(ret.getAdmin().getId());
+            ret.setAdmin(null);
+            ret.updateAuth(request);
+        } else {
+            ret.updateAuth(request);
+        }
         return ret;
     }
 }
