@@ -20,4 +20,9 @@ public class AuthController {
         LoginResponseDto loginResponse = authService.login(new LoginRequestDto(provider, code));
         return ResponseEntity.ok(TokenResponse.from(loginResponse));
     }
+    @GetMapping("/adminLogin/oauth/{provider}")
+    public ResponseEntity<TokenResponse> adminLogin(@PathVariable String provider, @RequestParam String code) {
+        LoginResponseDto loginResponse = authService.adminLogin(new LoginRequestDto(provider, code));
+        return ResponseEntity.ok(TokenResponse.from(loginResponse));
+    }
 }

@@ -55,7 +55,8 @@ public class AppUserController {
     // API 명세 추가
     @PatchMapping("/appUsers/updateProfile/{appUserId}")
     @RequiredManagerLogin
-    public ResponseEntity<AppUser> updateAdminProfile(@PathVariable Long appUserId, AdminRequest request){
+    public ResponseEntity<AppUser> updateAdminProfile(@PathVariable Long appUserId, @RequestBody AdminRequest request){
+        System.out.println(request.getName());
         AppUser res = appUserService.updateAdminProfile(appUserId, request);
         return ResponseEntity.ok(res);
     }

@@ -36,12 +36,6 @@ public class AppUser extends BaseEntity {
     private Admin admin;
 
 
-
-//    @OneToMany(mappedBy = "appUser")
-//    @JsonIgnore
-//    private List<SuggestAppUser> recommendList = new ArrayList<>();
-
-
     public static AppUser from(AppUserRequest request) {
         return AppUser.builder()
                 .auth(request.getAuth())
@@ -51,11 +45,7 @@ public class AppUser extends BaseEntity {
                 .build();
     }
 
-//    public void update(AppUserRequest request) {
-//        this.auth = request.getAuth();
-//        this.name = request.getName();
-//        this.email = request.getEmail();
-//    }
+
     public void updateProfile(AdminRequest request){
         this.name = request.getName();
     }
