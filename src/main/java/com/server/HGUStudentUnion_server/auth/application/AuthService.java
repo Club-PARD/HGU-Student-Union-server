@@ -52,7 +52,22 @@ public class AuthService {
             AppUser val = appUserRepo.save(AppUser.from(new AppUserRequest(1, userInfo.getName(), userInfo.getEmail())));
             return new LoginResponseDto(
                     jwtProvider.createToken(String.valueOf(val.getId()), Member.NORMAL));
-
+        });
+    }
+    @Transactional
+    public LoginResponseDto adminLogin(LoginRequestDto loginRequestDto) {
+        OauthUserInfo userInfo =  getStudentInfo(loginRequestDto);
+        Optional<AppUser> appUser = appUserRepo.findByEmail(userInfo.getEmail());
+        return appUser.map(value -> {
+            if(value.isManager()){
+                return new LoginResponseDto(
+                        jwtProvider.createToken(String.valueOf(value.getId()), Member.MANAGER));
+            }else {
+                return new LoginResponseDto(null);
+            }
+        }).orElseGet(()-> {
+            AppUser val = appUserRepo.save(AppUser.from(new AppUserRequest(1, userInfo.getName(), userInfo.getEmail())));
+            return new LoginResponseDto(null);
         });
     }
 
