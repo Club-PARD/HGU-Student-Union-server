@@ -7,6 +7,10 @@ import com.server.HGUStudentUnion_server.appUser.domain.repository.AdminRepo;
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AdminRequest;
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AppUserRequest;
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AuthRequest;
+import com.server.HGUStudentUnion_server.appUser.presentation.response.AppUserProfile;
+import com.server.HGUStudentUnion_server.auth.domain.LoginUser;
+import com.server.HGUStudentUnion_server.auth.domain.logins.NormalLogin;
+import com.server.HGUStudentUnion_server.auth.domain.required.RequiredLogin;
 import com.server.HGUStudentUnion_server.auth.domain.required.RequiredManagerLogin;
 import com.server.HGUStudentUnion_server.auth.domain.required.RequiredSuperManagerLogin;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +41,12 @@ public class AppUserController {
     @RequiredManagerLogin
     public ResponseEntity<AppUser> find(@PathVariable Long appUserId){
         AppUser res = appUserService.find(appUserId);
+        return ResponseEntity.ok(res);
+    }
+    @GetMapping("/appUsers/myProfile")
+    @RequiredLogin
+    public ResponseEntity<AppUserProfile> findMyProfile(@NormalLogin LoginUser loginUser){
+        AppUserProfile res = appUserService.findMyProfile(loginUser.getId());
         return ResponseEntity.ok(res);
     }
     @PostMapping("/appUsers")

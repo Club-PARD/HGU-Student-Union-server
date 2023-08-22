@@ -7,6 +7,7 @@ import com.server.HGUStudentUnion_server.appUser.domain.repository.AppUserRepo;
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AdminRequest;
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AppUserRequest;
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AuthRequest;
+import com.server.HGUStudentUnion_server.appUser.presentation.response.AppUserProfile;
 import com.server.HGUStudentUnion_server.exception.AppUser.AppUserNotFoundException;
 import com.server.HGUStudentUnion_server.suggest.domain.Suggest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,13 @@ public class AppUserService {
         } else {
             ret.updateAuth(request);
         }
+        return ret;
+    }
+
+    @Transactional(readOnly = true)
+    public AppUserProfile findMyProfile(Long id) {
+        AppUser temp = appUserRepo.findById(id).orElseThrow(AppUserNotFoundException::new);
+        AppUserProfile ret = AppUserProfile.of(temp);
         return ret;
     }
 }
