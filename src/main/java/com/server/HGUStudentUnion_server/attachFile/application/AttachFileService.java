@@ -45,4 +45,8 @@ public class AttachFileService {
         }
         return ret;
     }
+
+    public List<AttachFile> findByNoticeId(Long id) {
+        return attachFileRepo.findByNoticeId(id);
+    }
 }

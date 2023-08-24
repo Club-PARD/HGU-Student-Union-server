@@ -9,6 +9,7 @@ import com.server.HGUStudentUnion_server.appUser.presentation.request.AppUserReq
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AuthRequest;
 import com.server.HGUStudentUnion_server.appUser.presentation.response.AppUserProfile;
 import com.server.HGUStudentUnion_server.auth.domain.LoginUser;
+import com.server.HGUStudentUnion_server.auth.domain.logins.ManagerLogin;
 import com.server.HGUStudentUnion_server.auth.domain.logins.NormalLogin;
 import com.server.HGUStudentUnion_server.auth.domain.required.RequiredLogin;
 import com.server.HGUStudentUnion_server.auth.domain.required.RequiredManagerLogin;
@@ -63,11 +64,10 @@ public class AppUserController {
         return ResponseEntity.ok(res);
     }
     // API 명세 추가
-    @PatchMapping("/appUsers/updateProfile/{appUserId}")
+    @PatchMapping("/appUsers/updateProfile")
     @RequiredManagerLogin
-    public ResponseEntity<AppUser> updateAdminProfile(@PathVariable Long appUserId, @RequestBody AdminRequest request){
-        System.out.println(request.getName());
-        AppUser res = appUserService.updateAdminProfile(appUserId, request);
+    public ResponseEntity<AppUser> updateAdminProfile(@ManagerLogin LoginUser loginUser, @PathVariable Long appUserId, @RequestBody AdminRequest request){
+        AppUser res = appUserService.updateAdminProfile(loginUser.getId(), request);
         return ResponseEntity.ok(res);
     }
 
