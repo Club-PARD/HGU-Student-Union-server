@@ -31,6 +31,7 @@ public class Suggest extends BaseEntity {
     private AppUser appUser;
 
     private Boolean hide;
+    private Boolean access;
     private String title;
 
     private String content;
@@ -50,6 +51,7 @@ public class Suggest extends BaseEntity {
         return Suggest.builder()
                 .appUser(writer)
                 .hide(false)
+                .access(request.getAccess())
                 .title(request.getTitle())
                 .content(request.getContent())
                 .status(0)

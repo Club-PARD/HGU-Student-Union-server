@@ -25,6 +25,7 @@ public class SuggestDetailResponse {
     private int recommendCnt;
     private Boolean recommended;
     private Boolean hide;
+    private Boolean access;
     private String title;
     private String content;
     private int status;
@@ -42,7 +43,7 @@ public class SuggestDetailResponse {
     public static SuggestDetailResponse of(Suggest suggest, Boolean recommended, int recommendCnt){
         return new SuggestDetailResponse(suggest.getId(),
                 suggest.getAppUser().getName(), recommendCnt, recommended,
-                suggest.getHide(), suggest.getTitle(), suggest.getContent(),
+                suggest.getHide(), suggest.getAccess(), suggest.getTitle(), suggest.getContent(),
                 suggest.getStatus(), suggest.getCreatedAt(), suggest.getUpdatedAt(),
                 suggest.getViewCnt(), suggest.getAnsUser(), suggest.getAnswer(),
                 suggest.getAnsTime());

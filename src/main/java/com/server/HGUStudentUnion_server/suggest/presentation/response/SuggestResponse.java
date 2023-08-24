@@ -20,6 +20,7 @@ public class SuggestResponse {
     private String writer; // writer
     private int recommendCnt;
     private Boolean hide;
+    private Boolean access;
     private String title;
     private int status;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
@@ -36,6 +37,7 @@ public class SuggestResponse {
                     suggest.getAppUser().getName(),
                     cnt,
                     suggest.getHide(),
+                    suggest.getAccess(),
                     suggest.getTitle(),
                     suggest.getStatus(),
                     suggest.getCreatedAt(),
@@ -46,6 +48,7 @@ public class SuggestResponse {
                     suggest.getAppUser().getName(),
                     cnt,
                     suggest.getHide(),
+                    suggest.getAccess(),
                     suggest.getTitle(),
                     suggest.getStatus(),
                     suggest.getCreatedAt(),

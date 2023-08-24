@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SuggestRequest {
     private String title;
+    private Boolean access;
     private String content;
 }
