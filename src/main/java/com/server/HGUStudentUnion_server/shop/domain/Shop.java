@@ -26,6 +26,7 @@ public class Shop extends BaseEntity {
     private String name;
     private String title;
     private String category;
+    @Column(length = 5555)
     private String content;
     private String image;
     private int viewCnt;
