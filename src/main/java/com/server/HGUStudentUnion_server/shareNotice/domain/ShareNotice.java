@@ -37,6 +37,7 @@ public class ShareNotice extends BaseEntity {
     private Boolean hide;
     private Boolean pin;
     private String title;
+    @Column(length = 5555)
     private String content;
     private int viewCnt;
 
