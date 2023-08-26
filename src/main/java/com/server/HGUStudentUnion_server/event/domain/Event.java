@@ -27,7 +27,7 @@ public class Event extends BaseEntity {
     private Boolean hide;
     private String title;
     private String category;
-    @Column(length = 5555)
+    @Column(length = 501)
     private String content;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")

@@ -22,6 +22,7 @@ public class SuggestDetailResponse {
 
     private Long id;
     private String writer; // writer
+    private String writerEmail;
     private int recommendCnt;
     private Boolean recommended;
     private Boolean hide;
@@ -42,7 +43,7 @@ public class SuggestDetailResponse {
 
     public static SuggestDetailResponse of(Suggest suggest, Boolean recommended, int recommendCnt){
         return new SuggestDetailResponse(suggest.getId(),
-                suggest.getAppUser().getName(), recommendCnt, recommended,
+                suggest.getAppUser().getName(), suggest.getAppUser().getEmail(), recommendCnt, recommended,
                 suggest.getHide(), suggest.getAccess(), suggest.getTitle(), suggest.getContent(),
                 suggest.getStatus(), suggest.getCreatedAt(), suggest.getUpdatedAt(),
                 suggest.getViewCnt(), suggest.getAnsUser(), suggest.getAnswer(),

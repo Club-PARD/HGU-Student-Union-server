@@ -18,6 +18,7 @@ public class SuggestResponse {
 
     private Long id;
     private String writer; // writer
+    private String writerEmail;
     private int recommendCnt;
     private Boolean hide;
     private Boolean access;
@@ -35,6 +36,7 @@ public class SuggestResponse {
         if(suggest.getAnsUser() != null){
             return new SuggestResponse(suggest.getId(),
                     suggest.getAppUser().getName(),
+                    suggest.getAppUser().getEmail(),
                     cnt,
                     suggest.getHide(),
                     suggest.getAccess(),
@@ -46,6 +48,7 @@ public class SuggestResponse {
         } else {
             return new SuggestResponse(suggest.getId(),
                     suggest.getAppUser().getName(),
+                    suggest.getAppUser().getEmail(),
                     cnt,
                     suggest.getHide(),
                     suggest.getAccess(),
