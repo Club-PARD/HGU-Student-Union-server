@@ -38,7 +38,7 @@ public class Notice extends BaseEntity {
     private String title;
     private String image;
 
-    @Column(length = 5555)
+    @Column(length = 65555)
     private String content;
     private int viewCnt;
 
@@ -54,23 +54,6 @@ public class Notice extends BaseEntity {
                 .content(request.getContent())
                 .build();
     }
-//    public void addFiles(List<AttachFile> files){
-//        for(int i=0; i<files.size(); i++){
-//            this.files.add(files.get(i));
-//        }
-//    }
-
-
-//    public void update (NoticeUpdateRequest request, List<AttachFile> newFiles){
-//        this.title = request.getTitle();
-//        this.image = request.getImage();
-//        this.hide = request.getHide();
-//        this.content = request.getContent();
-//        this.pin = request.getPin();
-//        for(int i=0; i< newFiles.size(); i++){
-//            this.getFiles().add(newFiles.get(i));
-//        }
-//    }
 
 
 

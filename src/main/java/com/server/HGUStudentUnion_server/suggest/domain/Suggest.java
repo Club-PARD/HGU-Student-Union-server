@@ -34,7 +34,7 @@ public class Suggest extends BaseEntity {
     private Boolean access;
     private String title;
 
-    @Column(length = 5555)
+    @Column(length = 5001)
     private String content;
     private int status;
     private int viewCnt;
@@ -43,7 +43,7 @@ public class Suggest extends BaseEntity {
     @JoinColumn(referencedColumnName = "APPUSER_ID", name="ansUserId")
     private AppUser ansUser;
 
-    @Column(length = 5555)
+    @Column(length = 5001)
     private String answer;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
