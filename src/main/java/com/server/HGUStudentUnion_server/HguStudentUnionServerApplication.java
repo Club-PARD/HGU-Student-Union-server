@@ -10,7 +10,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class HguStudentUnionServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HguStudentUnionServerApplication.class, args);
+		try {
+			SpringApplication.run(HguStudentUnionServerApplication.class, args);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
