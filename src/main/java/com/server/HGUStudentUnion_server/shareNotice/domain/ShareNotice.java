@@ -31,7 +31,7 @@ public class ShareNotice extends BaseEntity {
     private AppUser user;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private List<AttachFile> files = new ArrayList<>();
+    private List<AttachFile> files;
 
     private int category;
     private Boolean hide;
@@ -48,7 +48,7 @@ public class ShareNotice extends BaseEntity {
                 .user(user)
                 .pin(request.getPin())
                 .category(request.getCategory())
-                .files(null)
+                .files(new ArrayList<>())
                 .hide(false)
                 .title(request.getTitle())
                 .content(request.getContent())

@@ -30,8 +30,6 @@ public class Notice extends BaseEntity {
     @JoinColumn(name = "APPUSER_ID")
     private AppUser user;
 
-//    @OneToMany(fetch = FetchType.EAGER)
-//    private List<AttachFile> files = new ArrayList<>();
 
     private Boolean pin;
     private Boolean hide;
