@@ -3,10 +3,10 @@ package com.server.HGUStudentUnion_server;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-//@SpringBootTest
+@SpringBootTest
 class HguStudentUnionServerApplicationTests {
 
-//	@Test
+	@Test
 	void contextLoads() {
 	}
 
