@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SuggestUpdateRequest {
     private Boolean hide;
+    private Boolean access;
     private String title;
     private String content;
 }

@@ -50,11 +50,11 @@ public class AppUserController {
         AppUserProfile res = appUserService.findMyProfile(loginUser.getId());
         return ResponseEntity.ok(res);
     }
-    @PostMapping("/appUsers")
-    public ResponseEntity<AppUser> save(@RequestBody AppUserRequest request){
-        AppUser res = appUserService.save(request);
-        return ResponseEntity.ok(res);
-    }
+//    @PostMapping("/appUsers")
+//    public ResponseEntity<AppUser> save(@RequestBody AppUserRequest request){
+//        AppUser res = appUserService.save(request);
+//        return ResponseEntity.ok(res);
+//    }
 
     // API 명세 추가
     @PatchMapping("/appUsers/auth/{appUserId}")

@@ -1,5 +1,7 @@
 package com.server.HGUStudentUnion_server.popUp.presentation;
 
+import com.server.HGUStudentUnion_server.auth.domain.required.RequiredManagerLogin;
+import com.server.HGUStudentUnion_server.auth.domain.required.RequiredSuperManagerLogin;
 import com.server.HGUStudentUnion_server.banner.domain.PopUp;
 import com.server.HGUStudentUnion_server.popUp.application.PopUpService;
 import com.server.HGUStudentUnion_server.popUp.presentation.request.PopUpRequest;
@@ -26,16 +28,19 @@ public class PopUpController {
         return ResponseEntity.ok(popUpService.findById(id));
     }
     @PostMapping("/popUps")
+    @RequiredSuperManagerLogin
     public ResponseEntity<PopUp> save(@RequestBody PopUpRequest request){
         PopUp res = popUpService.save(request);
         return ResponseEntity.ok(res);
     }
 
     @PatchMapping("/popUps/{id}")
+    @RequiredSuperManagerLogin
     public ResponseEntity<PopUp> update(@PathVariable Long id,@RequestBody PopUpRequest request){
         return ResponseEntity.ok(popUpService.update(id, request));
     }
     @DeleteMapping("/popUps/{id}")
+    @RequiredSuperManagerLogin
     public ResponseEntity<Long> delete(@PathVariable Long id){
         popUpService.delete(id);
         return ResponseEntity.ok(id);

@@ -72,6 +72,7 @@ public class Suggest extends BaseEntity {
         this.hide = request.getHide();
         this.title = request.getTitle();
         this.content = request.getContent();
+        this.access = request.getAccess();
     }
 
     public void insertAnswer(AppUser ansUser, SuggestAnswerRequest request) {
