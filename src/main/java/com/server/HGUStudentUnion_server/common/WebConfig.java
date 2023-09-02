@@ -17,6 +17,7 @@ import java.util.List;
 public class WebConfig extends WebMvcConfigurationSupport {
 
     private final LoginInterceptor loginInterceptor;
+    private final UserAgentInterceptor userAgentInterceptor;
     private final LoginNormalArgumentResolver loginNormalArgumentResolver;
     private final LoginManagerArgumentResolver loginManagerArgumentResolver;
     private final LoginSUManagerArgumentResolver loginSUManagerArgumentResolver;
@@ -38,7 +39,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor).addPathPatterns("/api/**");
-//        registry.addInterceptor( new LoginInterceptor()).addPathPatterns("/api/**");
+        registry.addInterceptor(userAgentInterceptor).addPathPatterns("/**");
 
     }
     @Override
