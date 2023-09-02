@@ -27,7 +27,9 @@ public class UserAgentInterceptor implements HandlerInterceptor {
 
     // isValidUserAgent 메서드는 이전에 설명한 것과 동일한 방식으로 구현
     private boolean isValidUserAgent(String userAgent) {
-        String allowedPattern = ".*Chrome/.*|.*Safari/.*|.*Firefox/.*|.*Internet Explorer/.*";
+//        String allowedPattern = ".*Chrome/.*|.*Safari/.*|.*Firefox/.*|.*Internet Explorer/.*";
+        String allowedPattern = ".*Chrome/.*|.*Firefox/.*|.*Internet Explorer/.*";
+
         return userAgent.matches(allowedPattern);
     }
 
