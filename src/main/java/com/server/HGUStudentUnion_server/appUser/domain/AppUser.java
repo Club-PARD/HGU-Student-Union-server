@@ -1,5 +1,6 @@
 package com.server.HGUStudentUnion_server.appUser.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AdminRequest;
 import com.server.HGUStudentUnion_server.appUser.presentation.request.AppUserRequest;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,11 @@ public class AppUser extends BaseEntity {
     @JoinColumn(name = "admin_id")
     private Admin admin;
 
+    private int loginCnt;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime lastLogin;
+
 
     public static AppUser from(AppUserRequest request) {
         return AppUser.builder()
@@ -42,9 +49,15 @@ public class AppUser extends BaseEntity {
                 .name(request.getName())
                 .email(request.getEmail())
                 .admin(null)
+                .loginCnt(1)
+                .lastLogin(LocalDateTime.now())
                 .build();
     }
 
+    public void updateLoginTime(){
+        this.loginCnt++;
+        this.lastLogin = LocalDateTime.now();
+    }
 
     public void updateProfile(AdminRequest request){
         this.name = request.getName();

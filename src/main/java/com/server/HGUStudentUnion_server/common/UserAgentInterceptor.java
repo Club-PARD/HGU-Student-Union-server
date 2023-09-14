@@ -25,22 +25,9 @@ public class UserAgentInterceptor implements HandlerInterceptor {
         }
     }
 
-    // isValidUserAgent 메서드는 이전에 설명한 것과 동일한 방식으로 구현
     private boolean isValidUserAgent(String userAgent) {
-//        String allowedPattern = ".*Chrome/.*|.*Safari/.*|.*Firefox/.*|.*Internet Explorer/.*";
         String allowedPattern = ".*Chrome/.*|.*Safari/.*|.*Firefox/.*|.*Macintosh\\s+(Intel|PPC|Mac OS X [0-9_]+(\\s+\\w+)?)\\s*|.*Windows NT [0-9]+\\.[0-9]+";
         return userAgent.matches(allowedPattern);
     }
 
-//    @Override
-//    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-//                           ModelAndView modelAndView) throws Exception {
-//        // 필요하면 추가적인 후처리 작업을 수행할 수 있습니다.
-//    }
-//
-//    @Override
-//    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-//            throws Exception {
-//        // 필요하면 요청 완료 후에 추가적인 작업을 수행할 수 있습니다.
-//    }
 }

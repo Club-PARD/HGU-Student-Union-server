@@ -41,6 +41,7 @@ public class AuthService {
         OauthUserInfo userInfo =  getStudentInfo(loginRequestDto);
         Optional<AppUser> appUser = appUserRepo.findByEmail(userInfo.getEmail());
         return appUser.map(value -> {
+            value.updateLoginTime();
             if(value.isManager()){
                 return new LoginResponseDto(
                         jwtProvider.createToken(String.valueOf(value.getId()), Member.MANAGER));
@@ -59,7 +60,9 @@ public class AuthService {
         OauthUserInfo userInfo =  getStudentInfo(loginRequestDto);
         Optional<AppUser> appUser = appUserRepo.findByEmail(userInfo.getEmail());
         return appUser.map(value -> {
+
             if(value.isManager()){
+                value.updateLoginTime();
                 return new LoginResponseDto(
                         jwtProvider.createToken(String.valueOf(value.getId()), Member.MANAGER));
             }else {
