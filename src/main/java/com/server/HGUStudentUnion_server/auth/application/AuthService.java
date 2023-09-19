@@ -11,12 +11,14 @@ import com.server.HGUStudentUnion_server.auth.domain.Member;
 import com.server.HGUStudentUnion_server.auth.domain.OauthUserInfo;
 import com.server.HGUStudentUnion_server.auth.infrastructure.JwtProvider;
 import com.server.HGUStudentUnion_server.auth.infrastructure.OauthHandler;
+import com.server.HGUStudentUnion_server.common.DataEnDecryption;
 import com.server.HGUStudentUnion_server.exception.oauth.InvalidTokenException;
 import com.server.HGUStudentUnion_server.exception.oauth.ManagerNoAuthorizationException;
 import com.server.HGUStudentUnion_server.exception.oauth.NoAuthorizationException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.SignatureException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +34,11 @@ public class AuthService {
     private final AppUserRepo appUserRepo;
     private final JwtProvider jwtProvider;
 
+    @Value("${EncSecretKey}")
+    private String secretKey;
+    @Value("${EncIv}")
+    private String iv;
+
     public OauthUserInfo getStudentInfo(LoginRequestDto loginRequestDto) {
         String oauthProvider = loginRequestDto.getOauthProvider();
         return oauthHandler.getUserInfoFromCode(oauthProvider, loginRequestDto.getCode(), Member.NORMAL);
@@ -39,7 +46,8 @@ public class AuthService {
     @Transactional
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         OauthUserInfo userInfo =  getStudentInfo(loginRequestDto);
-        Optional<AppUser> appUser = appUserRepo.findByEmail(userInfo.getEmail());
+        String decryptedEmail = DataEnDecryption.decrypt(userInfo.getEmail(), secretKey, iv);
+        Optional<AppUser> appUser = appUserRepo.findByEmail(decryptedEmail);
         return appUser.map(value -> {
             value.updateLoginTime();
             if(value.isManager()){
@@ -50,7 +58,7 @@ public class AuthService {
                         jwtProvider.createToken(String.valueOf(value.getId()), Member.NORMAL));
             }
         }).orElseGet(()-> {
-            AppUser val = appUserRepo.save(AppUser.from(new AppUserRequest(1, userInfo.getName(), userInfo.getEmail())));
+            AppUser val = appUserRepo.save(AppUser.from(new AppUserRequest(1, userInfo.getName(), DataEnDecryption.encrypt(userInfo.getEmail(), secretKey, iv))));
             return new LoginResponseDto(
                     jwtProvider.createToken(String.valueOf(val.getId()), Member.NORMAL));
         });
@@ -58,7 +66,8 @@ public class AuthService {
     @Transactional
     public LoginResponseDto adminLogin(LoginRequestDto loginRequestDto) {
         OauthUserInfo userInfo =  getStudentInfo(loginRequestDto);
-        Optional<AppUser> appUser = appUserRepo.findByEmail(userInfo.getEmail());
+        String decryptedEmail = DataEnDecryption.decrypt(userInfo.getEmail(), secretKey, iv);
+        Optional<AppUser> appUser = appUserRepo.findByEmail(decryptedEmail);
         return appUser.map(value -> {
 
             if(value.isManager()){
@@ -69,7 +78,7 @@ public class AuthService {
                 return new LoginResponseDto(null);
             }
         }).orElseGet(()-> {
-            AppUser val = appUserRepo.save(AppUser.from(new AppUserRequest(1, userInfo.getName(), userInfo.getEmail())));
+            AppUser val = appUserRepo.save(AppUser.from(new AppUserRequest(1, userInfo.getName(),DataEnDecryption.encrypt(userInfo.getEmail(), secretKey, iv))));
             return new LoginResponseDto(null);
         });
     }

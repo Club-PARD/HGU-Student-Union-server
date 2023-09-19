@@ -7,7 +7,9 @@ import com.server.HGUStudentUnion_server.auth.domain.required.RequiredLogin;
 import com.server.HGUStudentUnion_server.auth.domain.required.RequiredManagerLogin;
 import com.server.HGUStudentUnion_server.auth.domain.required.RequiredSUManagerLogin;
 import com.server.HGUStudentUnion_server.auth.domain.required.RequiredSuperManagerLogin;
+import com.server.HGUStudentUnion_server.suggest.presentation.request.SuggestRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,36 @@ public class TestController {
 //    private final SuggestService suggestService;
 
 
+    // Server
+    // enc
+    // - 최초로그인 시 email 값 enc해서 db 저장
+    // dec
+    // - 로그인 시 email 값 enc 해서 db 회원 조회
+
+    // Client
+    // 문의/건의 조회 시 작성자 email 확인할때 Dec
+
+    @Value("${cipherKey}")
+    private String cipherKey;
+    @Value("${EncSecretKey}")
+    private String secretKey;
+//    private String secretKey = "12345678901234567890123456789012"; // 32자리 비밀키
+
+    @Value("${EncIv}")
+    private String iv;
+//    private String iv = "abcdefghijklmnop"; // 16자리 iv
+    @PostMapping("/encrypt")
+    public ResponseEntity<Void> encryptTest(@RequestParam("string") String email){
+        System.out.println(DataEnDecryption.encrypt(email, secretKey, iv ));
+//        DataEnDecryption.encrypt(email);
+        return ResponseEntity.ok(null);
+    }
+    @PostMapping("/decrypt")
+    public ResponseEntity<Void> decryptTest(@RequestParam("code") String code){
+        System.out.println(DataEnDecryption.decrypt(code, secretKey, iv));
+//        DataEnDecryption.decrypt(code, secretKey, iv);
+        return ResponseEntity.ok(null);
+    }
 
     @GetMapping("/normal")
     @RequiredLogin

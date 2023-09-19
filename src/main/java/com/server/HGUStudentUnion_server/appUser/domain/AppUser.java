@@ -10,6 +10,7 @@ import com.server.HGUStudentUnion_server.common.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ import java.util.List;
 @SQLDelete(sql = "UPDATE AppUser SET deleted = true WHERE APPUSER_ID = ?")
 @Where(clause = "deleted = false")
 public class AppUser extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="APPUSER_ID")
@@ -44,6 +46,7 @@ public class AppUser extends BaseEntity {
 
 
     public static AppUser from(AppUserRequest request) {
+
         return AppUser.builder()
                 .auth(request.getAuth())
                 .name(request.getName())
