@@ -28,17 +28,8 @@ public class TestController {
 //    private final SuggestService suggestService;
 
 
-    // Server
-    // enc
-    // - 최초로그인 시 email 값 enc해서 db 저장
-    // dec
-    // - 로그인 시 email 값 enc 해서 db 회원 조회
 
-    // Client
-    // 문의/건의 조회 시 작성자 email 확인할때 Dec
 
-    @Value("${cipherKey}")
-    private String cipherKey;
     @Value("${EncSecretKey}")
     private String secretKey;
 //    private String secretKey = "12345678901234567890123456789012"; // 32자리 비밀키
