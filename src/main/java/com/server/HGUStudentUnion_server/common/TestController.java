@@ -32,23 +32,20 @@ public class TestController {
 
     @Value("${EncSecretKey}")
     private String secretKey;
-//    private String secretKey = "12345678901234567890123456789012"; // 32자리 비밀키
 
     @Value("${EncIv}")
     private String iv;
-//    private String iv = "abcdefghijklmnop"; // 16자리 iv
     @PostMapping("/encrypt")
     public ResponseEntity<Void> encryptTest(@RequestParam("string") String email){
         System.out.println(DataEnDecryption.encrypt(email, secretKey, iv ));
-//        DataEnDecryption.encrypt(email);
         return ResponseEntity.ok(null);
     }
-    @PostMapping("/decrypt")
-    public ResponseEntity<Void> decryptTest(@RequestParam("code") String code){
-        System.out.println(DataEnDecryption.decrypt(code, secretKey, iv));
-//        DataEnDecryption.decrypt(code, secretKey, iv);
-        return ResponseEntity.ok(null);
-    }
+//    @PostMapping("/decrypt")
+//    public ResponseEntity<Void> decryptTest(@RequestParam("code") String code){
+//        System.out.println(DataEnDecryption.decrypt(code, secretKey, iv));
+////        DataEnDecryption.decrypt(code, secretKey, iv);
+//        return ResponseEntity.ok(null);
+//    }
 
     @GetMapping("/normal")
     @RequiredLogin
