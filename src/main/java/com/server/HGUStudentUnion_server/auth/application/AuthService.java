@@ -46,8 +46,8 @@ public class AuthService {
     @Transactional
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         OauthUserInfo userInfo =  getStudentInfo(loginRequestDto);
-        String decryptedEmail = DataEnDecryption.decrypt(userInfo.getEmail(), secretKey, iv);
-        Optional<AppUser> appUser = appUserRepo.findByEmail(decryptedEmail);
+        String encryptedEmail = DataEnDecryption.encrypt(userInfo.getEmail(), secretKey, iv);
+        Optional<AppUser> appUser = appUserRepo.findByEmail(encryptedEmail);
         return appUser.map(value -> {
             value.updateLoginTime();
             if(value.isManager()){
@@ -66,8 +66,8 @@ public class AuthService {
     @Transactional
     public LoginResponseDto adminLogin(LoginRequestDto loginRequestDto) {
         OauthUserInfo userInfo =  getStudentInfo(loginRequestDto);
-        String decryptedEmail = DataEnDecryption.decrypt(userInfo.getEmail(), secretKey, iv);
-        Optional<AppUser> appUser = appUserRepo.findByEmail(decryptedEmail);
+        String encryptedEmail = DataEnDecryption.encrypt(userInfo.getEmail(), secretKey, iv);
+        Optional<AppUser> appUser = appUserRepo.findByEmail(encryptedEmail);
         return appUser.map(value -> {
 
             if(value.isManager()){
