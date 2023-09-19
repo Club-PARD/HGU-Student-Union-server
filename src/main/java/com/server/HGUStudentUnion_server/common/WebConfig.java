@@ -39,7 +39,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor).addPathPatterns("/api/**");
-//        registry.addInterceptor(userAgentInterceptor).addPathPatterns("/**");
+        registry.addInterceptor(userAgentInterceptor).addPathPatterns("/**");
 
     }
     @Override
