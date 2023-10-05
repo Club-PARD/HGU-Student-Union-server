@@ -25,9 +25,14 @@ public class UserAgentInterceptor implements HandlerInterceptor {
         }
     }
 
+//    private boolean isValidUserAgent(String userAgent) {
+//        String allowedPattern = ".*Chrome/.*|.*Safari/.*|.*Firefox/.*|.*Macintosh\\s+(Intel|PPC|Mac OS X [0-9_]+(\\s+\\w+)?)\\s*|.*Windows NT [0-9]+\\.[0-9]+";
+//        return userAgent.matches(allowedPattern);
+//    }
     private boolean isValidUserAgent(String userAgent) {
-        String allowedPattern = ".*Chrome/.*|.*Safari/.*|.*Firefox/.*|.*Macintosh\\s+(Intel|PPC|Mac OS X [0-9_]+(\\s+\\w+)?)\\s*|.*Windows NT [0-9]+\\.[0-9]+";
+        String allowedPattern = ".*Macintosh\\s+(Intel|PPC|Mac OS X [0-9_]+(\\s+\\w+)?)\\s*|.*Windows NT [0-9]+\\.[0-9]+|.*Android.*|.*iPhone.*";
         return userAgent.matches(allowedPattern);
     }
+
 
 }
