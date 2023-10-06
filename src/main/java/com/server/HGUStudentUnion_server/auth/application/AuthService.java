@@ -43,6 +43,10 @@ public class AuthService {
         String oauthProvider = loginRequestDto.getOauthProvider();
         return oauthHandler.getUserInfoFromCode(oauthProvider, loginRequestDto.getCode(), Member.NORMAL);
     }
+    public OauthUserInfo getAdminInfo(LoginRequestDto loginRequestDto) {
+        String oauthProvider = loginRequestDto.getOauthProvider();
+        return oauthHandler.getUserInfoFromCode(oauthProvider, loginRequestDto.getCode(), Member.MANAGER);
+    }
     @Transactional
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         OauthUserInfo userInfo =  getStudentInfo(loginRequestDto);
@@ -65,7 +69,7 @@ public class AuthService {
     }
     @Transactional
     public LoginResponseDto adminLogin(LoginRequestDto loginRequestDto) {
-        OauthUserInfo userInfo =  getStudentInfo(loginRequestDto);
+        OauthUserInfo userInfo =  getAdminInfo(loginRequestDto);
         String encryptedEmail = DataEnDecryption.encrypt(userInfo.getEmail(), secretKey, iv);
         Optional<AppUser> appUser = appUserRepo.findByEmail(encryptedEmail);
         return appUser.map(value -> {
